@@ -16,7 +16,6 @@
     
     
 }*/
-
 window.onload = function () {
 	//个人中心的下拉菜单
 	$().getClass('member').hover(function () {
