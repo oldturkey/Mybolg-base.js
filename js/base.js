@@ -107,7 +107,7 @@ Base.prototype.removeClass=function(className){
         if(hasClass(this.elements[i],className)){
             this.elements[i].className=this.elements[i].className.replace(new RegExp('(\\s|^)'+className+'(\\s|$)'),'');
            }  
-    }
+    } 
         return this;
 }
 
