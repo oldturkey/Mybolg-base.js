@@ -62,8 +62,9 @@ addEvent.equeal=function(es,fn){
 
 //把IE常用的Event对象配对到W3C中去  增加配对模式把IE没有的preventDefault和stopPropagation方法赋予IE浏览器兼容IE浏览器的问题
 addEvent.fixEvent=function(event){
-    event.preventDefault=addEvent.fixEvent.preventDefault;
+        event.preventDefault=addEvent.fixEvent.preventDefault;
         event.stopPropagation=addEvent.fixEvent.stopPropagation;
+        event.target=event.srcElement;
     return event;
 }
 
@@ -82,6 +83,8 @@ function removeEvent(obj,type,fn){
         obj.removeEventListener(type,fn,false);
     }
     else{
+        //判断有events的情况下才可以移除
+        if(obj.events){
         for(var i in obj.events[type]){
             if(obj.events[type][i]==fn){
                 delete obj.events[type][i];
@@ -89,7 +92,7 @@ function removeEvent(obj,type,fn){
         }
     }
 }
-
+}
 
 
 //兼容不同浏览器获取视口的大小
@@ -134,22 +137,24 @@ function insertRule(sheet,selectorText,cssText,postion){
 }
 
 
-//获取event对象
-function getEvent(event){
-    return event||window.event;
+/*
+//获取Event对象 已经使用配对模式将IE的event对象和方法进行了配对
+function getEvent(event) {
+	return event || window.event;
 }
 
-
-//取消/阻止默认行为
-function preDef(event){
-    var e=getEvent(event);
-    if(typeof e.preventDefault!='undefined'){//W3C
-        e.preventDefault();
-    }else{                      //IE
-        e.returnValue=false;
-    }
+//阻止默认行为
+function preDef(event) {
+	var e = getEvent(event);
+	if (typeof e.preventDefault != 'undefined') {//W3C
+		e.preventDefault();
+	} else {//IE
+		e.returnValue = false;
+	}
 }
+*/
 
-
-
-
+//删除左右空格
+ function trim(str){
+     return str.replace(/(^\s*)|(\s*$)/g,'');
+ }
