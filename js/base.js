@@ -107,7 +107,7 @@ Base.prototype.removeClass=function(className){
         if(hasClass(this.elements[i],className)){
             this.elements[i].className=this.elements[i].className.replace(new RegExp('(\\s|^)'+className+'(\\s|$)'),'');
            }  
-    } 
+    }
         return this;
 }
 
@@ -147,8 +147,10 @@ Base.prototype.html=function(str){
 //设置鼠标移入移出事件 注意，把事件加到元素上只是对目标元素生效，如果离开目标元素就会触发事件，所以如果是显示新的区块，希望移到显示出来的元素上的时候也能维持事件就要把新的元素包含在目标元素中。例如下拉菜单，要把ul列表放在div内
 Base.prototype.hover=function(over,out){
     for(var i=0;i<this.elements.length;i++){
-        this.elements[i].onmouseover=over;
-        this.elements[i].onmouseout=out;
+        //this.elements[i].onmouseover=over;
+        //this.elements[i].onmouseout=out;改成现代事件绑定
+        addEvent(this.elements[i],'mouseover',over);
+        addEvent(this.elements[i],'mouseout',out);
     }
     return this;
 }
@@ -178,9 +180,18 @@ Base.prototype.lock=function(){
         this.elements[i].style.height=getInner().height+'px';
         this.elements[i].style.display="block";
         document.documentElement.style.overflow="hidden";
+       /* 解决不了火狐浏览器锁屏的时候还是可以下拉的问题
+        addEvent(this.elements[i],'mousedown',function(e){
+            e.preventDefault();
+            addEvent(document,'mousemove',function(e){
+               e.preventDefault(); 
+            });
+        });
+        */
+        addEvent(window,'scroll',scrollTop);
         }
     return this;
-}
+};
 
 
 //解锁功能
@@ -188,6 +199,7 @@ Base.prototype.unlock=function(){
     for(var i=0;i<this.elements.length;i++){
         this.elements[i].style.display="none";
         document.documentElement.style.overflow="auto";
+        removeEvent(window,'scroll',scrollTop);
         }
     return this;
 }
@@ -204,8 +216,8 @@ Base.prototype.click = function (fn) {
 
 //设置物体居中
 Base.prototype.center=function(width,height){
-    var top=(document.documentElement.clientHeight-width)/2;
-    var left=(document.documentElement.clientWidth-height)/2;
+    var top=(getInner().height-width)/2;
+    var left=(getInner().width-height)/2;
     for(var i=0;i<this.elements.length;i++){
         this.elements[i].style.top=top+'px';
         this.elements[i].style.left=left+'px';
@@ -214,27 +226,70 @@ Base.prototype.center=function(width,height){
 }
 //获取屏幕变化信息
 Base.prototype.resize=function(fn){
-    window.onresize=fn;
+     for (var i = 0; i < this.elements.length; i ++) {
+         var element=this.elements[i];
+        /* 改为现代事件绑定
+        window.onresize=function(){
+             fn();
+             if(element.offsetLeft>getInner().width-element.offsetWidth){
+                 element.style.left=getInner().width-element.offsetWidth+'px';
+             }
+             if(element.offsetLeft<0){
+                 element.style.left=0;
+             }
+             if(element.offsetTop>getInner().height-element.offsetHeight){
+                 element.style.top=getInner().height-element.offsetHeight+'px';
+             }
+             if(element.offsetTop<0){
+                 element.style.top=0;
+             }
+         };
+         */
+         addEvent(window,'resize',function(){
+             fn();
+             if(element.offsetLeft>getInner().width-element.offsetWidth){
+                 element.style.left=getInner().width-element.offsetWidth+'px';
+             }
+             if(element.offsetLeft<0){
+                 element.style.left=0;
+             }
+             if(element.offsetTop>getInner().height-element.offsetHeight){
+                 element.style.top=getInner().height-element.offsetHeight+'px';
+             }
+             if(element.offsetTop<0){
+                 element.style.top=0;
+             }
+         });
+         }
     return this;
+    
 }
 
 
 //拖拽功能
  Base.prototype.drag=function(){
     for (var i = 0; i < this.elements.length; i ++) {
-         this.elements[i].onmousedown=function(e){
-             preDef(e);
-        var e=getEvent(e);
+         addEvent(this.elements[i],'mousedown',function(e){
+             //判断div是否为空来决定是否组织默认行为来解决空div的bug
+        if(trim(this.innerHTML).length==0)e.preventDefault();
+             
         //把这里的this: oDiv 赋值给_this，这样后面就可以直接调用
         var _this=this;
         var diffX=e.clientX- _this.offsetLeft;
         var diffY=e.clientY- _this.offsetTop;
-             //解决ie浏览器鼠标移出可视范围后停止捕获事件的bug
-        if(typeof _this.setCapture !='undefined'){
-            _this.setCapture();
-        }
-        document.onmousemove=function(e){
-             var e=getEvent(e);
+           //仅鼠标放在H2头部的时候才能拖动  
+         if(e.target.tagName=='H2'){
+            addEvent(document,'mousemove',move);
+            addEvent(document,'mouseup',up);
+         } else{
+             removeEvent(document,'mousemove',move);
+            removeEvent(document,'mouseup',up);
+         }  
+             
+        //document.onmousemove=function(e){
+            
+        //因为mouseup执行的函数无法读取到上面的匿名函数，所以将执行的函数分离出来进行操作
+        function move(e){
             var h=e.clientX-diffX;
             var v=e.clientY-diffY;
             if(h<0){
@@ -249,15 +304,25 @@ Base.prototype.resize=function(fn){
              }      
             _this.style.left=h+'px';
             _this.style.top=v+'px';
+               //解决ie浏览器鼠标移出可视范围后停止捕获事件的bug
+        if(typeof _this.setCapture !='undefined'){
+            _this.setCapture();
         }
-        document.onmouseup=function(){
-            this.onmousemove=null;
-            this.onmouseup=null;
-            if(typeof releaseCapture!='undefined'){
-                _this.releaseCapture();
-            }
         }
-    };
+             function up(){
+                    removeEvent(document,'mousemove',move);
+                    removeEvent(document,'mouseup',up);
+                    if(typeof releaseCapture!='undefined'){
+                        _this.releaseCapture();
+                            }
+                        }
+        
+            });
         }
 	return this;
+}
+
+ function scrollTop(){
+     document.documentElement.scrollTop=0;
+            document.body.scrollTop=0;
 }
