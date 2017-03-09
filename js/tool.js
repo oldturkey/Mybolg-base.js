@@ -142,7 +142,6 @@ function insertRule(sheet,selectorText,cssText,postion){
 function getEvent(event) {
 	return event || window.event;
 }
-
 //阻止默认行为
 function preDef(event) {
 	var e = getEvent(event);
