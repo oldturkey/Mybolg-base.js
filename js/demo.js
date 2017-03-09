@@ -16,6 +16,8 @@
     
     
 }*/
+
+
 window.onload = function () {
 	//个人中心的下拉菜单
 	$().getClass('member').hover(function () {
@@ -58,7 +60,6 @@ window.onload = function () {
     });
     
     
-    
     // 拖拽  让某个物体抬起时点击具体元素即可，move和up是全剧作用域。
     /* 方法步骤var oDiv=document.getElementById('login');
     oDiv.onmousedown=function(e){
@@ -77,9 +78,21 @@ window.onload = function () {
             this.onmouseup=null;
         }
     }*/
-    //login已经在上面赋值过了
-    login.drag();
+    
+    
+    //拖拽login已经在上面赋值过了 传入可以拖拽的元素
+    login.drag([$().getTagName('h2').getElement(0),$().getTagName('span').getElement(0)]);
+    
 };
+
+
+
+
+
+
+
+
+
 
 
 
