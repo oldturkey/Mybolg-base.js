@@ -69,13 +69,19 @@ Base.prototype.getClass=function(className,parent){
  }
  
  
- //获取某一个节点
-Base.prototype.getElement = function(num) {
+//获取某一个节点 并且返回这个节点对象
+Base.prototype.getElement=function(num){
+    return this.elements[num];
+};
+
+
+ //获取某一个节点，并且返回Base
+Base.prototype.eq = function(num) {
      var element =this.elements[num];
      this.elements=[];
      this.elements[0]=element;
      return this;
- }
+ };
  
 //设置css
 Base.prototype.css=function(attr,value){
@@ -87,7 +93,7 @@ Base.prototype.css=function(attr,value){
         this.elements[i].style[attr]=value;
     }
     return this;
-}
+};
 
 
 
@@ -99,7 +105,7 @@ Base.prototype.addClass=function(className){
            }  
     }
     return this;
-}
+};
 
 //移除class
 Base.prototype.removeClass=function(className){
@@ -109,14 +115,14 @@ Base.prototype.removeClass=function(className){
            }  
     }
         return this;
-}
+};
 
 //添加link或style里的style规则
 Base.prototype.addRule = function(num,selectorText,cssText,postion) {
     var sheet=document.styleSheets[num];
     insertRule(sheet,selectorText,cssText,postion);
     return this;
-}
+};
 
 
 
@@ -129,7 +135,7 @@ Base.prototype.removeRule =function(num,index) {
         sheet.removeRule(index);
     }
     return this;
-}
+};
 
 
 //设置html
@@ -141,7 +147,7 @@ Base.prototype.html=function(str){
         this.elements[i].innerHTML=str;
     }
     return this;
-}
+};
 
 
 //设置鼠标移入移出事件 注意，把事件加到元素上只是对目标元素生效，如果离开目标元素就会触发事件，所以如果是显示新的区块，希望移到显示出来的元素上的时候也能维持事件就要把新的元素包含在目标元素中。例如下拉菜单，要把ul列表放在div内
@@ -153,7 +159,7 @@ Base.prototype.hover=function(over,out){
         addEvent(this.elements[i],'mouseout',out);
     }
     return this;
-}
+};
 
 //设置显示
 Base.prototype.show=function(){
@@ -161,7 +167,7 @@ Base.prototype.show=function(){
         this.elements[i].style.display="block";
     }
     return this;
-}
+};
 
 
 //设置隐藏
@@ -170,7 +176,7 @@ Base.prototype.hide=function(){
         this.elements[i].style.display="none";
     }
     return this;
-}
+};
 
 
 //锁屏功能
@@ -202,7 +208,7 @@ Base.prototype.unlock=function(){
         removeEvent(window,'scroll',scrollTop);
         }
     return this;
-}
+};
 
 
 //设置点击事件
@@ -211,7 +217,7 @@ Base.prototype.click = function (fn) {
 		this.elements[i].onclick = fn;
 	}
 	return this;
-}
+};
 
 
 //设置物体居中
@@ -223,7 +229,8 @@ Base.prototype.center=function(width,height){
         this.elements[i].style.left=left+'px';
     }
     return this;
-}
+};
+
 //获取屏幕变化信息
 Base.prototype.resize=function(fn){
      for (var i = 0; i < this.elements.length; i ++) {
@@ -263,10 +270,10 @@ Base.prototype.resize=function(fn){
          }
     return this;
     
-}
+};
 
 
-//拖拽功能
+/*拖拽功能 转为插件，在需要的时候引入
  Base.prototype.drag=function(){
     for (var i = 0; i < this.elements.length; i ++) {
          addEvent(this.elements[i],'mousedown',function(e){
@@ -320,9 +327,14 @@ Base.prototype.resize=function(fn){
             });
         }
 	return this;
-}
-
+}   */
+ //锁屏的时候让屏幕不能往下拖动的方法分离出来。操作滚动条的时候滚动条自动归0
  function scrollTop(){
-     document.documentElement.scrollTop=0;
+            document.documentElement.scrollTop=0;
             document.body.scrollTop=0;
 }
+
+//插件引入入口
+ Base.prototype.extend=function(name,fn){
+     Base.prototype[name]=fn;
+ };
