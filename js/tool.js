@@ -1,5 +1,43 @@
 //因为项目多次需要用到兼容浏览器的问题，为了避免重复书写冗余代码，所以对兼容问题进行封装
 
+//浏览器检测
+(function(){
+    window.sys={};  //定义一个全局的属性，让外部可以访问保存浏览器信息对象
+    var ua=navigator.userAgent.toLowerCase();  //获取浏览器信息字符串
+    var s;                                      //浏览器信息数组，浏览器+版本号         
+    
+    
+    /*//alert(ua.match(/msie ([\d.]+)/));  // msie+数字.0 就是IE  结果是msie 7.0,7.0
+    alert(ua);
+       // alert(ua.match(/firefox\/([\d.]+)/));    //firefox/50.0,50.0
+    //alert(ua.match(/chrome\/([\d.]+)/));    //chrome
+    //alert(winow.opear.version());     opera自带的方法
+    //alert(ua.match(/opear\.*version\/([\d.]+)/));  opear  用[]将字符串进行了分组
+   
+    
+    
+    
+    if((/msie ([\d.]+)/).test(ua)){    
+        s=ua.match(/msie ([\d.]+)/);
+        sys.ie=s[1];                       //s[1]是版本，
+    }
+    //火狐
+    if((/firefox\/([\d.]+)/).test(ua)){    
+        s=ua.match(/firefox\/([\d.]+)/);
+        sys.firefox=s[1];                       //s[1]是版本，
+    }
+    if((/chrome\/([\d.]+)/).test(ua)){    
+        s=ua.match(/chrome\/([\d.]+)/);
+        sys.chrome=s[1];                       //s[1]是版本，
+    } */
+    //三元操作原理     true?s=1:0   (s=1)?b=1:(s=2)?b=1:0
+    (s=ua.match(/msie ([\d.]+)/))?sys.ie=s[1]:
+    (s=ua.match(/firefox\/([\d.]+)/))?sys.firefox=s[1]:
+    (s=ua.match(/chrome\/([\d.]+)/))?sys.chrome=s[1]:
+    (s=ua.match(/opear\/.*version\/([\d.]+)/))?sys.opera=s[1]:
+    (s=ua.match(/version\/([\d.]+).*safari/))?sys.safari=s[1]:0;
+})();
+
 
 //跨浏览器添加事件绑定
 // JS一切基于对象的思路创建，看得更加清晰，为每个事件分配一个计数器实现累加
