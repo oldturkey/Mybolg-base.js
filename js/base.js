@@ -17,44 +17,107 @@
 }*/
 
 //前台调用  1.因为直接使用this会导致用的不是Base而是dom元素，就没有了对象的方法，所以检测有this传入时，将this的值赋值给对象数组中的第一项，相当于Base.elements[0]
-var $=function(_this){
-    return new Base(_this);
+var $=function(args){
+    return new Base(args);
 }
 //基础库 防止elements变成公有内容，因此在构造函数内部上添加属性而不是放在原型上成为共有属性。
-function Base (_this) {
+function Base (args) {
     this.elements=[];
-    if(_this!=undefined){
-        this.elements[0]=_this;
-    };  //_this和undefined都是对象，和typeof 返回的undefined不同，后者返回的是一个值
+    
+    if(typeof args=='string'){
+        //css模拟 通过是否有空格进行判断
+        if(args.indexOf(' ')!=-1){   //如果空格不为-1表示有空格，在其他位置上
+            var elements=args.split(' ');//把节点拆分开来保存到数组里去
+            var childElements=[];  //存放临时节点对象的数组，解决被覆盖的问题
+            var node=[];    //用于存放父节点
+            for(var i=0;i<elements.length;i++){ 
+                if(node.length==0)node.push(document);//没有父节点时父节点时document
+              switch(elements[i].charAt(0)){
+            case'#':
+                childElements=[];  //清理掉临时节点，让父节点失效，子节点生效
+                childElements.push(this.getId(elements[i].substring(1))); 
+                node=childElements; //保存父节点，因为childElements需要清理，仅子节点生效
+                break;
+            case'.':
+                childElements=[];
+                      for(var j=0;j<node.length;j++){  //循环可能存在的多个父节点元素
+                       var temps =  this.getClass(elements[i].substring(1),node[j]);
+                          for(var k=0;k<temps.length;k++){
+                            childElements.push(temps[k]); 
+                          }
+                      }
+                        node=childElements;
+                break;
+            default://因为传入的元素节点没有前后缀
+                      childElements=[];
+                      for(var j=0;j<node.length;j++){  //循环可能存在的多个父节点元素
+                       var temps =  this.getTagName(elements[i],node[j]);
+                          for(var k=0;k<temps.length;k++){
+                            childElements.push(temps[k]); 
+                          }
+                      }
+                        node=childElements;
+                    }  
+                }
+            this.elements=childElements;
+        }else
+        
+        //find模拟
+        switch(args.charAt(0)){
+            case'#':
+              this.elements.push(this.getId(args.substring(1)));  
+                break;
+            case'.':
+                this.elements=this.getClass(args.substring(1));
+                break;
+            default://因为传入的元素节点没有前后缀
+                this.elements=this.getTagName(args);
+        }
+        //通过测试，如果args是object的话，args就是传递了this对象
+    }else if(typeof args=='object'){
+        if(args!=undefined){
+            this.elements[0]=args;
+        };  //_this和undefined都是对象，和typeof 返回的undefined不同，后者返回的是一个值
+    }
 }
-
 
 //创建一个数组，来保存获取的节点和节点数组
     //Base.prototype.elements=[];
     
-    
-
 
 //获取ID节点
 Base.prototype.getId= function(id){
-        this.elements.push(document.getElementById(id));
-        return this;
+        //this.elements.push(document.getElementById(id)); getId方法不止会用在Base上，如果只是返回到elements数组中，用途太短
+        //return this; 因为基础库里只会调用该方法，会直接返回值给Base对象了，所以不需要这段话了
+    return document.getElementById(id);
     };   
     //获取元素节点
-Base.prototype.getTagName=function(tag){
-        var tags=document.getElementsByTagName(tag);
-        for(var i=0;i<tags.length;i++){
-            this.elements.push(tags[i]);
-        }
-        return this;
+Base.prototype.getTagName=function(tag,parentNode){
+       var node=null;
+    //同样的使用临时数组储存元素
+    var temps=[];
+     if(parentNode!=undefined){
+         node=parentNode;
+     }
+     else{
+         node=document;
+     }
+     var tags=node.getElementsByTagName(tag);
+     for(var i=0;i<tags.length;i++){ 
+             temps.push(tags[i]);
+     }
+    return temps;
+         //return this; 因为基础库里只会调用该方法，会直接返回值给Base对象了，所以不需要这段话了
     };
 
 
 //获取class节点数组  有父级元素的时候，把elements传给node来控制区域
-Base.prototype.getClass=function(className,parent){
+Base.prototype.getClass=function(className,parentNode){
      var node=null;
-     if(arguments.length==2){
-         node=document.getElementById(parent);
+    //同样的使用临时数组储存元素
+    var temps=[];
+     if(parentNode!=undefined){
+         node=parentNode;
      }
      else{
          node=document;
@@ -62,13 +125,50 @@ Base.prototype.getClass=function(className,parent){
      var all=node.getElementsByTagName('*');
      for(var i=0;i<all.length;i++){
          if(all[i].className==className){
-             this.elements.push(all[i]);
+             temps.push(all[i]);
          }
      }
-     return this;
- }
+    return temps;
+      //return this; 因为基础库里只会调用该方法，会直接返回值给Base对象了，所以不需要这段话了
+ };
  
- 
+ //设置css节点
+Base.prototype.find =function(str){
+    //建立一个临时数组，用于存放第二次循环得到的数据
+    var childElements=[];
+    for(var i=0;i<this.elements.length;i++){
+         switch(str.charAt(0)){
+            case'#':
+               childElements.push(this.getId(str.substring(1)));
+                break;
+            case'.':
+               /*var all=this.elements[i].getElementsByTagName('*');
+                for(var j=0;j<all.length;j++){
+                    if(all[j].className==str.substring(1)){
+                            childElements.push(all[j]);
+                               }
+     }*/
+                 var temps=this.getClass(str.substring(1),this.elements[i]);//传的是classname和父节点，返回的还是elements但是数组元素换成了子元素
+                 //直接赋值第二次循环会覆盖掉第一次的结果
+                 for(var j=0;j<temps.length;j++){
+                     childElements.push(temps[j]);
+                 }           
+                break;
+            default://因为传入的元素节点没有前后缀
+              var tags=this.getTagName(str,this.elements[i]);
+                 //注意两次循环不能都是用i来作为循环的常量，要换一个参数,否则就没办法循环两次了
+                for(var j=0;j<tags.length;j++){
+                    childElements.push(tags[j]);
+                }
+            }
+        }
+    //把存放第二次查找到的各项的临时数组交给Base的elements数组
+    this.elements=childElements;
+    return this;
+}    
+
+
+
 //获取某一个节点 并且返回这个节点对象
 Base.prototype.getElement=function(num){
     return this.elements[num];
