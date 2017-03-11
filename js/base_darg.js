@@ -1,6 +1,6 @@
-
 //拖拽插件
-$().extend('drag',function(tags){
+$().extend('drag',function(){
+    var tags=arguments;
     for (var i = 0; i < this.elements.length; i ++) {
          addEvent(this.elements[i],'mousedown',function(e){
              //判断div是否为空来决定是否组织默认行为来解决空div的bug

@@ -60,7 +60,7 @@ function Base (args) {
                     }  
                 }
             this.elements=childElements;
-        }else
+        }else{
         
         //find模拟
         switch(args.charAt(0)){
@@ -73,12 +73,20 @@ function Base (args) {
             default://因为传入的元素节点没有前后缀
                 this.elements=this.getTagName(args);
         }
+    }
         //通过测试，如果args是object的话，args就是传递了this对象
     }else if(typeof args=='object'){
         if(args!=undefined){
             this.elements[0]=args;
-        };  //_this和undefined都是对象，和typeof 返回的undefined不同，后者返回的是一个值
+        }  //_this和undefined都是对象，和typeof 返回的undefined不同，后者返回的是一个值
+    }else if(typeof args=='function'){
+        this.ready(args);
     }
+}
+
+//addDomLoaded方法，DOM加载 备用方法
+Base.prototype.ready=function(fn){
+    addDomLoaded(fn);
 }
 
 //创建一个数组，来保存获取的节点和节点数组
@@ -170,7 +178,7 @@ Base.prototype.find =function(str){
 
 
 //获取某一个节点 并且返回这个节点对象
-Base.prototype.getElement=function(num){
+Base.prototype.ge=function(num){
     return this.elements[num];
 };
 
@@ -183,6 +191,19 @@ Base.prototype.eq = function(num) {
      return this;
  };
  
+
+//获取首个节点，并返回该节点
+Base.prototype.first=function(){
+    return this.elements[0];
+}
+
+//获取最后一个节点，并返回该节点对象
+Base.prototype.last=function(){
+    return this.elements[this.elements.length-1];
+}
+
+
+
 //设置css
 Base.prototype.css=function(attr,value){
     for(var i=0;i<this.elements.length;i++){
