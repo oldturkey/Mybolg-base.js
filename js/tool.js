@@ -193,12 +193,14 @@ function getInner(){
 
 
 //跨浏览器获得style
-function getStyle(element,attr){
-    if(typeof window.getComputedStyle!='undefined'){
-               return window.getComputedStyle(element,null)[attr];
-           }else if(typeof element.currentStyle!='undefined'){
-               return element.currentStyle[attr];
-}
+function getStyle(element, attr) {
+	var value;
+	if (typeof window.getComputedStyle != 'undefined') {//W3C
+		value = parseInt(window.getComputedStyle(element, null)[attr]);
+	} else if (typeof element.currentStyle != 'undeinfed') {//IE
+		value = parseInt(element.currentStyle[attr]);
+	}
+	return value;
 }
 
 //判断class是否存在
@@ -238,3 +240,9 @@ function preDef(event) {
  function trim(str){
      return str.replace(/(^\s*)|(\s*$)/g,'');
  }
+
+ //锁屏的时候让屏幕不能往下拖动的方法分离出来。操作滚动条的时候滚动条自动归0
+ function scrollTop(){
+            document.documentElement.scrollTop=0;
+            document.body.scrollTop=0;
+}

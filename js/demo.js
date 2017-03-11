@@ -37,6 +37,23 @@ $(function(){
     
     //拖拽 
     login.drag($('#login h2').first(),$('#login .other').first());
+    
+    
+    //百度分享初始位置
+    $('#share').css('top',(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');
+    
+    //百度分享收缩效果
+    $('#share').hover(function(){
+        $(this).animate({
+            attr:'x',
+            target:0
+        });
+    },function(){
+        $(this).animate({
+            attr:'x',
+            target:-211
+        });
+    });
 });
 
 

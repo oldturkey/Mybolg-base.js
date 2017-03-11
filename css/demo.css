@@ -137,3 +137,136 @@ ul li {
 	padding:15px 10px;
 	color:#666;
 }
+
+/*百度分享侧边栏 */
+#share {
+    width: 210px;
+    height: 315px;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 0px;
+    left: -211px;
+    background: #fff;
+}
+#share h2 {
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0;
+    background: #eee;
+    font-size: 14px;
+    color: #666;
+    text-indent: 10px;
+}
+#share ul {
+    padding: 3px 0 2px 5px;
+    height: 254px;
+}
+#share ul li {
+    width: 96px;
+    height: 28px;
+    padding: 2px;
+    float: left;
+}
+#share ul li a {
+    display: block;
+    width: 95px;
+    height: 26px;
+    line-height: 26px;
+    text-decoration: none;
+    text-indent: 30px;
+    background-image: url(images/share_bg.png);
+    background-repeat: no-repeat;
+    color: #666;
+}
+#share ul li a:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    background-color: #fff;
+    color: #06f;
+}
+#share ul li a.a{
+    background-position: 5px 4px;
+}
+#share ul li a.b{
+    background-position: 5px -26px;
+}
+#share ul li a.c{
+    background-position: 5px -56px;
+}
+#share ul li a.d{
+    background-position: 5px -86px;
+}
+#share ul li a.e{
+    background-position: 5px -116px;
+}
+#share ul li a.f{
+    background-position: 5px -146px;
+}
+#share ul li a.g{
+    background-position: 5px -176px;
+}
+#share ul li a.h{
+    background-position: 5px -206px;
+}
+#share ul li a.i{
+    background-position: 5px -236px;
+}
+#share ul li a.j{
+    background-position: 5px -266px;
+}
+#share ul li a.k{
+    background-position: 5px -296px;
+}
+#share ul li a.l{
+    background-position: 5px -326px;
+}
+#share ul li a.m{
+    background-position: 5px -356px;
+}
+#share ul li a.n{
+    background-position: 5px -386px;
+}
+#share ul li a.o{
+    background-position: 5px -416px;
+}
+#share ul li a.p{
+    background-position: 5px -446px;
+}
+
+#share .share_footer {
+    height: 26px;
+    background: #eee;
+    position: relative;
+}
+
+#share .share_footer a{
+    position: absolute;
+    padding: 0 0 0 13px;
+    top: 7px;
+    left: 140px;
+    background-image: url(images/share_bg.png);
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 0px -477px;
+    text-decoration: none;
+    color: #666;
+}
+
+#share .share_footer a:hover {
+    color: #06f;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+#share .share_footer span {
+    display: block;
+    width: 24px;
+    height: 88px;
+    position: absolute;
+    top: -230px;
+    left: 210px;
+    background: url(images/share.png)no-repeat;
+    cursor: pointer;
+}
+
+
