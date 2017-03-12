@@ -492,9 +492,9 @@ Base.prototype.animate = function (obj) {
 			element.style[attr] = start + 'px';
 		}
 		
-		
-		clearInterval(window.timer);
-		timer = setInterval(function () {
+		//将定时器绑定在事件对象上，这样不同物体运动就不会互相干扰了
+		clearInterval(element.timer);
+		element.timer = setInterval(function () {
 		
 			if (type == 'buffer') {
 				step = attr == 'opacity' ? (target - parseFloat(getStyle(element, attr)) * 100) / speed :
@@ -514,7 +514,7 @@ Base.prototype.animate = function (obj) {
 				} else {
 					var temp = parseFloat(getStyle(element, attr)) * 100;
 					element.style.opacity = parseInt(temp + step) / 100;
-					element.style.filter = 'alpha(opacity=' + parseInt(temp + step) + ')'
+					element.style.filter = 'alpha(opacity=' + parseInt(temp + step) + ')';
 				}
 
 			} else {
@@ -534,13 +534,15 @@ Base.prototype.animate = function (obj) {
 		
 		function setTarget() {
 			element.style[attr] = target + 'px';
-			clearInterval(timer);
+			clearInterval(element.timer);
+            if(obj.fn!= undefined)obj.fn();
 		}
 		
 		function setOpacity() {
 			element.style.opacity = parseInt(target) / 100;
 			element.style.filter = 'alpha(opacity=' + parseInt(target) + ')';
-			clearInterval(timer);
+			clearInterval(element.timer);
+            if(obj.fn!=undefined)obj.fn();//检测是否传入了fn，传入了就可以做异步动画
 		}
 	}
 	return this;

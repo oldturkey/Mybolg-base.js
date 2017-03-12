@@ -8,11 +8,25 @@ $(function(){
 		//$().getClass('member').css('background', 'url(images/arrow2.png) no-repeat 55px center');
 		//this.css('color', 'red');
 		$(this).css('background', 'url(images/arrow2.png) no-repeat 55px center');
-		$('#header .member_ul').show();
+		$('#header .member_ul').show().animate({
+            attr:'o',
+            target:100,
+            t:30,
+            step:10
+        });
 	}, function () {
 		//$().getClass('member').css('background', 'url(images/arrow.png) no-repeat 55px center');
 		$(this).css('background', 'url(images/arrow.png) no-repeat 55px center');
-		$('#header .member_ul').hide();
+		$('#header .member_ul').animate({
+            attr:'o',
+            start:100,
+            target:0,
+            t:30,
+            step:10,
+            fn:function(){
+                $('#header .member_ul').hide();
+            }
+        });
 	});
     
     //登陆框
@@ -26,13 +40,22 @@ $(function(){
             };
     });
     $('#header .login').click(function(){
-        login.center(250,350);
-        login.css('display','block');
-        screen.lock();
+        login.center(250,350).css('display','block');
+        screen.lock().animate({
+            attr:'o',
+            target:30,
+            t:30,
+            step:10
+        });
     })
     $('#login .close').click(function(){
         login.css('display','none');
-        screen.unlock();
+        screen.unlock().animate({
+            attr:'o',
+            target:0,
+            t:30,
+            step:10
+        });
     });
     
     //拖拽 

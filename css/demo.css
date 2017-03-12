@@ -45,6 +45,9 @@ ul li {
 	border-top:none;
 	padding:10px 0 0 0;
 	display:none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+   
 }
 #header ul li {
 	height:25px;
@@ -74,8 +77,8 @@ ul li {
     left:0;
     background: #000;
     z-index: 9998;
-    opacity: .3;
-    filter: alpha(opacity=30);
+    opacity: 0;
+    filter: alpha(opacity=0);
     
 }
 #login {
@@ -87,6 +90,7 @@ ul li {
     z-index: 9999;
     background: #fff;
     cursor: move;
+    
 }
 #login h2 {
 	height:40px;
