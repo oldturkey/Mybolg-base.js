@@ -202,8 +202,27 @@ Base.prototype.last=function(){
     return this.elements[this.elements.length-1];
 }
 
+//获取当前节点的下一个元素节点
+Base.prototype.next=function(){
+    for(var i=0;i<this.elements.length;i++){
+        this.elements[i]=this.elements[i].nextSibling;
+        if(this.elements[i]==null)throw new Error('找不到下一个同级节点！');
+        //非IE浏览器，会考虑空白节点，所以要做一次递归，再次执行
+        if(this.elements[i].nodeType==3)this.next();  
+        }
+    return this;
+};
 
-
+//获取当前节点的上一个元素节点
+Base.prototype.prev=function(){
+     for(var i=0;i<this.elements.length;i++){
+        this.elements[i]=this.elements[i].previousSibling;
+        if(this.elements[i]==null)throw new Error('找不到上一个同级节点！');
+        //非IE浏览器，会考虑空白节点，所以要做一次递归，再次执行
+        if(this.elements[i].nodeType==3)this.prev();  
+        }
+    return this;
+}
 //设置css
 Base.prototype.css=function(attr,value){
     for(var i=0;i<this.elements.length;i++){
@@ -286,14 +305,16 @@ Base.prototype.hover=function(over,out){
 //设置点击切换
 Base.prototype.toggle=function(){
     for(var i=0;i<this.elements.length;i++){
-      var count=0;
-    var args=arguments;
-    addEvent(this.elements[i],'click',function(){
-        args[count++ % args.length]();
-    });
+        (function(element,args){
+         var count=0;
+        addEvent(element,'click',function(){
+        args[count++ % args.length].call(this);
+        });   
+        })(this.elements[i],arguments)
         }
     return this;
 };
+
 
 //设置显示
 Base.prototype.show=function(){
@@ -502,9 +523,7 @@ Base.prototype.animate = function (obj) {
 		if (attr == 'opacity') {
 			element.style.opacity = parseInt(start) / 100;
 			element.style.filter = 'alpha(opacity=' + parseInt(start) +')';
-		} else {
-			element.style[attr] = start + 'px';
-		}
+		} 
 		
         //没有传入mul的时候，创造一个mul数组，并且把传入的attr和target变成键值对
         if(mul==undefined){
@@ -528,8 +547,8 @@ Base.prototype.animate = function (obj) {
 			}
 			//循环mul里的所有属性键值对
 			for(i in mul){
-                attr=i=='x'?'left':i=='y'?'top':i=='w'?'width':i=='h'?'height':i=='o'?'opacity':i!=undefined?i:'left';
-                target=mul[i];
+               attr = i == 'x' ? 'left' : i == 'y' ? 'top' : i == 'w' ? 'width' : i == 'h' ? 'height' : i == 'o' ? 'opacity' : i != undefined ? i : 'left';
+				target = mul[i];
             
 			if (attr == 'opacity') {
 				if (step == 0) {

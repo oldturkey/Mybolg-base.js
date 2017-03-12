@@ -12,8 +12,8 @@ $(function(){
             t:30,
             step:10,
             mul:{
-                'o':100,
-                'h':120
+                o:100,
+                h:120
             }
         });
 	}, function () {
@@ -24,8 +24,8 @@ $(function(){
             t:30,
             step:10,
             mul:{
-                'o':0,
-                'h':0
+                o:0,
+                h:0
             },
             fn:function(){
                 $('#header .member_ul').hide();
@@ -115,7 +115,26 @@ $(function(){
                 }); 
             }
         });
-    })
+    });
+    
+    //侧边栏菜单切换
+    $('#sidebar h2').toggle(function(){
+        $(this).next().animate({
+           mul:{
+                h : 0,
+				o : 0
+            }
+        });
+    },function(){
+        $(this).next().animate({
+            mul:{
+                h:150,
+                o:100
+            }
+        });
+    });
+    
+    
 });
 
 
