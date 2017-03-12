@@ -9,20 +9,24 @@ $(function(){
 		//this.css('color', 'red');
 		$(this).css('background', 'url(images/arrow2.png) no-repeat 55px center');
 		$('#header .member_ul').show().animate({
-            attr:'o',
-            target:100,
             t:30,
-            step:10
+            step:10,
+            mul:{
+                'o':100,
+                'h':120
+            }
         });
 	}, function () {
 		//$().getClass('member').css('background', 'url(images/arrow.png) no-repeat 55px center');
 		$(this).css('background', 'url(images/arrow.png) no-repeat 55px center');
 		$('#header .member_ul').animate({
-            attr:'o',
-            start:100,
-            target:0,
+            //完成了同步动画和队列动画并解决了问题之后，可以是实现下拉菜单收缩的效果
             t:30,
             step:10,
+            mul:{
+                'o':0,
+                'h':0
+            },
             fn:function(){
                 $('#header .member_ul').hide();
             }
@@ -63,8 +67,13 @@ $(function(){
     
     
     //百度分享初始位置
-    $('#share').css('top',(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');
-    
+    $('#share').css('top',getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');
+    addEvent(window,'scroll',function(){
+        $('#share').animate({
+            attr:'y',
+            target:getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2
+        });
+    });
     //百度分享收缩效果
     $('#share').hover(function(){
         $(this).animate({
@@ -77,6 +86,16 @@ $(function(){
             target:-211
         });
     });
+    
+    $('#test').click(function(){
+        $(this).animate({
+            mul:{
+                'w':101,
+                'o':30,
+                height:300
+            }
+        })
+    })
 });
 
 

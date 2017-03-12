@@ -457,7 +457,7 @@ Base.prototype.animate = function (obj) {
 		var element = this.elements[i];
 		var attr = obj['attr'] == 'x' ? 'left' : obj['attr'] == 'y' ? 'top' : 
 					   obj['attr'] == 'w' ? 'width' : obj['attr'] == 'h' ? 'height' : 
-					   obj['attr'] == 'o' ? 'opacity' : 'left';
+					   obj['attr'] == 'o' ? 'opacity' :'left';
 
 		
 		var start = obj['start'] != undefined ? obj['start'] : 
@@ -469,7 +469,8 @@ Base.prototype.animate = function (obj) {
 		
 		var alter = obj['alter'];
 		var target = obj['target'];
-		
+        //mul用来执行同步动画，只接受attr和target的键值对，来让多个属性同时变化
+		var mul=obj['mul'];
 		
 		var speed = obj['speed'] != undefined ? obj['speed'] : 6;							//可选，默认缓冲速度为6
 		var type = obj['type'] == 0 ? 'constant' : obj['type'] == 1 ? 'buffer' : 'buffer';		//可选，0表示匀速，1表示缓冲，默认缓冲
@@ -477,7 +478,7 @@ Base.prototype.animate = function (obj) {
 		
 		if (alter != undefined && target == undefined) {
 			target = alter + start;
-		} else if (alter == undefined && target == undefined) {
+		} else if (alter == undefined && target == undefined&&mul==undefined) {
 			throw new Error('alter增量或target目标量必须传一个！');
 		}
 		
@@ -492,18 +493,31 @@ Base.prototype.animate = function (obj) {
 			element.style[attr] = start + 'px';
 		}
 		
+        //没有传入mul的时候，创造一个mul数组，并且把传入的attr和target变成键值对
+        if(mul==undefined){
+                mul={};
+                mul[attr]=target;
+            }
 		//将定时器绑定在事件对象上，这样不同物体运动就不会互相干扰了
 		clearInterval(element.timer);
 		element.timer = setInterval(function () {
-		
+		/*
+            问题1：多个同步动画执行的时候，如果要执行队列动画，就会造成多次执行队列动画：解决=不管同步多少次，都执行一次队列
+            问题2：多个动画数值差别大的时候，导致定时器提前清理，部分动画达不到目标值：解决=最后一个对话执行完毕后清理定时器
+            */
+            //创建一个布尔值，来了解多个动画是否全都执行完毕
+            var flag=true;
+            
 			if (type == 'buffer') {
 				step = attr == 'opacity' ? (target - parseFloat(getStyle(element, attr)) * 100) / speed :
 													 (target - parseInt(getStyle(element, attr))) / speed;
 				step = step > 0 ? Math.ceil(step) : Math.floor(step);
 			}
-			
-			
-			
+			//循环mul里的所有属性键值对
+			for(i in mul){
+                attr=i=='x'?'left':i=='y'?'top':i=='w'?'width':i=='h'?'height':i=='o'?'opacity':i!=undefined?i:'left';
+                target=mul[i];
+            
 			if (attr == 'opacity') {
 				if (step == 0) {
 					setOpacity();
@@ -516,7 +530,7 @@ Base.prototype.animate = function (obj) {
 					element.style.opacity = parseInt(temp + step) / 100;
 					element.style.filter = 'alpha(opacity=' + parseInt(temp + step) + ')';
 				}
-
+                if(parseInt(target)!=parseInt(parseFloat(getStyle(element,attr))*100))flag=false;
 			} else {
 				if (step == 0) {
 					setTarget();
@@ -527,22 +541,25 @@ Base.prototype.animate = function (obj) {
 				} else {
 					element.style[attr] = parseInt(getStyle(element, attr)) + step + 'px';
 				}
+                if(parseInt(target)!=parseInt(getStyle(element, attr)))flag=false;
 			}
-
+            }   
+            if(flag){
+                clearInterval(element.timer);
+            if(obj.fn!=undefined)obj.fn();//检测是否传入了fn，传入了就可以做异步动画
+		      }
+            
 			//document.getElementById('aaa').innerHTML += step + '<br />';
 		}, t);
 		
 		function setTarget() {
 			element.style[attr] = target + 'px';
-			clearInterval(element.timer);
-            if(obj.fn!= undefined)obj.fn();
-		}
+        }	
 		
 		function setOpacity() {
 			element.style.opacity = parseInt(target) / 100;
 			element.style.filter = 'alpha(opacity=' + parseInt(target) + ')';
-			clearInterval(element.timer);
-            if(obj.fn!=undefined)obj.fn();//检测是否传入了fn，传入了就可以做异步动画
+			
 		}
 	}
 	return this;

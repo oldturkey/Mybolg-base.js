@@ -40,14 +40,15 @@ ul li {
 	left:-20px;
 	background:#FBF7E1;
 	width:100px;
-	height:120px;
+	height:0px;
 	border:1px solid #999;
 	border-top:none;
 	padding:10px 0 0 0;
 	display:none;
+    overflow: hidden;
     opacity: 0;
     filter: alpha(opacity=0);
-   
+  /* 超出部分隐藏来达到下拉菜单伸缩，文字随着列表的边长显示出来 */
 }
 #header ul li {
 	height:25px;
@@ -273,4 +274,11 @@ ul li {
     cursor: pointer;
 }
 
-
+#test {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:100px;
+    left: 100px;
+    background: red;
+}
