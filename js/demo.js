@@ -87,14 +87,34 @@ $(function(){
         });
     });
     
-    $('#test').click(function(){
-        $(this).animate({
-            mul:{
-                'w':101,
-                'o':30,
-                height:300
+  //滑动导航栏特效
+    $('#nav .about li').hover(function(){
+        var target=$(this).first().offsetLeft;
+        $('#nav .nav_bg').animate({
+            attr:'x',
+            target:target+20,
+            t:30,
+            step:10,
+            fn:function(){
+                $('#nav .white').animate({
+                   attr:'x',
+                    target:-target
+                });
             }
-        })
+        });
+    },function(){
+        $('#nav .nav_bg').animate({
+            attr:'x',
+            target:20,
+            t:30,
+            step:10,
+            fn:function(){
+               $('#nav .white').animate({
+                   attr:'x',
+                    target:0
+                }); 
+            }
+        });
     })
 });
 
