@@ -282,6 +282,19 @@ Base.prototype.hover=function(over,out){
     return this;
 };
 
+
+//设置点击切换
+Base.prototype.toggle=function(){
+    for(var i=0;i<this.elements.length;i++){
+      var count=0;
+    var args=arguments;
+    addEvent(this.elements[i],'click',function(){
+        args[count++ % args.length]();
+    });
+        }
+    return this;
+};
+
 //设置显示
 Base.prototype.show=function(){
     for(var i=0;i<this.elements.length;i++){
