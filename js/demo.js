@@ -32,7 +32,55 @@ $(function(){
             }
         });
 	});
+    //注册框
+    var reg=$('#reg');
+    var screen=$('#screen');
+    reg.center(600,550);
+    $().resize(function(){
+        reg.center(600,550);
+        if(reg.css('display')=='block'){
+            screen.lock();
+            };
+    });
+    $('#header .reg').click(function(){
+        reg.center(600,550).css('display','block');
+        screen.lock().animate({
+            attr:'o',
+            target:30,
+            t:30,
+            step:10
+        });
+    })
+    $('#reg .close').click(function(){
+        reg.css('display','none');
+        screen.unlock().animate({
+            attr:'o',
+            target:0,
+            t:30,
+            step:10
+        });
+    });
     
+    //表单验证
+    $('form').form('user').bind('focus', function () {
+		$('#reg .info_user').css('display', 'block');
+		$('#reg .error_user').css('display', 'none');
+		$('#reg .succ_user').css('display', 'none');
+	}).bind('blur', function () {
+		if (trim($(this).value()) == '') {
+			$('#reg .info_user').css('display', 'none');
+			$('#reg .error_user').css('display', 'none');
+			$('#reg .succ_user').css('display', 'none');
+		} else if (!/[a-zA-Z0-9]{2,20}/.test(trim($(this).value()))) {
+			$('#reg .error_user').css('display', 'block');
+			$('#reg .info_user').css('display', 'none');
+			$('#reg .succ_user').css('display', 'none');
+		} else {
+			$('#reg .succ_user').css('display', 'block');
+			$('#reg .error_user').css('display', 'none');
+			$('#reg .info_user').css('display', 'none');
+		}
+	});
     //登陆框
     var login=$('#login');
     var screen=$('#screen');
@@ -63,12 +111,12 @@ $(function(){
     });
     
     //拖拽 
-    login.drag($('#login h2').first(),$('#login .other').first());
-    
+    login.drag($('#login h2').first());
+    reg.drag($('#reg h2').first());
     
     //百度分享初始位置
-    $('#share').css('top',getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');
-    addEvent(window,'scroll',function(){
+    $('#share').css('top',getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');  
+    $(window).bind('scroll',function(){
         $('#share').animate({
             attr:'y',
             target:getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2

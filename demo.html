@@ -23,7 +23,51 @@
                 <li><a href="###">退出</a></li>
             </ul>
         </div>
-        <div class="login">登陆</div>
+        <div class="reg">注册</div>
+        <div class="login">登陆</div>   
+    </div>
+    <div id="reg">
+	<h2><img src="images/close.png" alt="" class="close" />会员注册</h2>
+	<form name="reg">
+	<dl>
+		<dd>用 户 名： <input type="text" name="user" class="text" />
+			<span class="info info_user">请输入用户名，2~20位，由字母、数字和下划线组成！</span>
+			<span class="error error_user">输入不合法，请重新输入！</span>
+			<span class="succ succ_user">可用</span>
+		</dd>
+		<dd>密　　码： <input type="password" name="pass" class="text" /></dd>
+		<dd>密码确认： <input type="password" name="notpass" class="text" /></dd>
+		<dd><span style="vertical-align:-2px">提　　问：</span> <select name="ques">
+									<option value="0">- - - - 请选择 - - - -</option>
+									<option value="1">- - 您最喜欢吃的菜</option>
+									<option value="2">- - 您的狗狗的名字</option>
+									<option value="3">- - 您的出生地</option>
+									<option value="4">- - 您最喜欢的明星</option>
+								  </select></dd>
+		<dd>回　　答： <input type="text" name="ans" class="text" /></dd>
+		<dd>电子邮件： <input type="text" name="email" class="text" /></dd>
+		<dd class="birthday"><span style="vertical-align:-2px">生　　日：</span> <select name="year">
+									<option value="0">- 请选择 -</option>
+								  </select> 年
+								  <select name="month">
+									<option value="0">- 请选择 -</option>
+								  </select> 月
+								  <select name="day">
+									<option value="0">- 请选择 -</option>
+								  </select> 日</dd>
+		<dd style="height:105px;"><span style="vertical-align:85px">备　　注：</span> <textarea name="ps"></textarea></dd>			
+		<dd style="padding:0 0 0 320px;">还可以输入200字</dd>		
+		<dd style="padding:0 0 0 80px;"><input type="button" class="submit" /></dd>
+	</dl>
+	</form>
+</div>
+    
+        <div id="login">
+        <h2><img src="images/close.png" alt="" class="close" />网站登录</h2>
+        <div class="user"> 账 号 <input type="text" name="user" class="text" /></div>
+        <div class="pass"> 密 码 <input type="password" name="pass" class="text" /></div>
+        <div class="button"><input type="button" class="submit" value="" /></div>
+        <div class="other">如有疑问 | 忘记密码?</div>
     </div>
     
     <div id="nav">
@@ -51,6 +95,11 @@
             </ul>
         </div>   
     </div>
+    
+
+    
+
+    
     
     <div id="main">
         <div id="sidebar">
@@ -82,13 +131,6 @@
         <div id='index'>
             index
         </div>
-    </div>
-    <div id="login">
-        <h2><img src="images/close.png" alt="" class="close" />网站登录</h2>
-        <div class="user"> 账 号 <input type="text" name="user" class="text" /></div>
-        <div class="pass"> 密 码 <input type="password" name="pass" class="text" /></div>
-        <div class="button"><input type="button" class="submit" value="" /></div>
-        <div class="other">如有疑问 | 忘记密码?</div>
     </div>
 
     <div id="screen"></div>

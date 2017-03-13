@@ -132,7 +132,8 @@ Base.prototype.getClass=function(className,parentNode){
      }
      var all=node.getElementsByTagName('*');
      for(var i=0;i<all.length;i++){
-         if(all[i].className==className){
+         //if(all[i].className==className){
+         if((new RegExp('(\\s|^)'+className+'(\\s|$)')).test(all[i].className)){
              temps.push(all[i]);
          }
      }
@@ -235,6 +236,24 @@ Base.prototype.css=function(attr,value){
     return this;
 };
 
+//设置表单字段元素
+Base.prototype.form=function(name){
+     for(var i=0;i<this.elements.length;i++){
+        this.elements[i]=this.elements[i][name]; 
+         }
+    return this;
+};
+
+//设置或者获取表单元素的值
+Base.prototype.value=function(str){
+    for(var i=0;i<this.elements.length;i++){
+        if(arguments.length==0){
+            return this.elements[i].value;
+        }
+        this.elements[i].value=str;
+    }
+    return this;
+};
 
 
 //添加Class  用正则判断是否传入了已经拥有的class，这个class可能出现在开头，结尾或者两边都是空格的中间
@@ -289,6 +308,14 @@ Base.prototype.html=function(str){
     return this;
 };
 
+
+//设置事件发生器
+Base.prototype.bind=function(event,fn){
+    for(var i=0;i<this.elements.length;i++){
+      addEvent(this.elements[i],event,fn);  
+        }
+    return this;
+}
 
 //设置鼠标移入移出事件 注意，把事件加到元素上只是对目标元素生效，如果离开目标元素就会触发事件，所以如果是显示新的区块，希望移到显示出来的元素上的时候也能维持事件就要把新的元素包含在目标元素中。例如下拉菜单，要把ul列表放在div内
 Base.prototype.hover=function(over,out){
