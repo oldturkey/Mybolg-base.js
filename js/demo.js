@@ -121,7 +121,7 @@ $(function(){
             $('#reg .info_pass .q2').html('○').css('color','#666');
         }
         
-        if(/[0-9]/.test(value)){
+        if(/[\d]/.test(value)){
             code_length++;
         }
         if(/[a-z]/.test(value)){
@@ -130,7 +130,7 @@ $(function(){
         if(/[A-Z]/.test(value)){
             code_length++;
         }
-        if(/[^0-9a-zA-Z]/.test(value)){
+        if(/[^\w]/.test(value)){
             code_length++;
         }
         //第三个条件  大、小写字母、数字、非空字符，至少两种
@@ -164,6 +164,65 @@ $(function(){
         }
         if(code_length>=2&&value_length>=6&&value_length<=20&&(!/\s/.test(value)))return flag=true;
     }
+    
+    //密码再次确认
+    $('form').form('notpass').bind('focus', function () {
+         $('#reg .info_notpass').css('display', 'block');
+		$('#reg .error_notpass').css('display', 'none');
+		$('#reg .succ_notpass').css('display', 'none');
+        }).bind('blur', function () {
+        if (trim($(this).value()) == '') {
+             $('#reg .info_notpass').css('display', 'none');
+         }else if(trim($(this).value())==trim($('form').form('pass').value())){
+             $('#reg .info_notpass').css('display', 'none');
+             $('#reg .error_notpass').css('display', 'none');
+		     $('#reg .succ_notpass').css('display', 'block');
+         }else{
+             $('#reg .info_notpass').css('display', 'none');
+             $('#reg .error_notpass').css('display', 'block');
+		     $('#reg .succ_notpass').css('display', 'none');
+         }
+    });
+    
+    //回答验证
+    $('form').form('ans').bind('focus', function () {
+         $('#reg .info_ans').css('display', 'block');
+		$('#reg .error_ans').css('display', 'none');
+		$('#reg .succ_ans').css('display', 'none');
+        }).bind('blur', function () {
+        if (trim($(this).value()) == '') {
+             $('#reg .info_ans').css('display', 'none');
+         }else if(trim($(this).value()).length>=2&&trim($(this).value()).length<=32){
+             $('#reg .info_ans').css('display', 'none');
+             $('#reg .error_ans').css('display', 'none');
+		     $('#reg .succ_ans').css('display', 'block');
+         }else{
+             $('#reg .info_ans').css('display', 'none');
+             $('#reg .error_ans').css('display', 'block');
+		     $('#reg .succ_ans').css('display', 'none');
+         }
+    });
+    
+    //电子邮件验证
+    $('form').form('email').bind('focus', function () {
+         $('#reg .info_email').css('display', 'block');
+		$('#reg .error_email').css('display', 'none');
+		$('#reg .succ_email').css('display', 'none');
+        }).bind('blur', function () {
+        if (trim($(this).value()) == '') {
+             $('#reg .info_email').css('display', 'none');
+         }else if(/^\w+@[0-9a-z]+(\.[a-z]{2,4}){1,2}$/.test(trim($(this).value()))){
+             $('#reg .info_email').css('display', 'none');
+             $('#reg .error_email').css('display', 'none');
+		     $('#reg .succ_email').css('display', 'block');
+         }else{
+             $('#reg .info_email').css('display', 'none');
+             $('#reg .error_email').css('display', 'block');
+		     $('#reg .succ_email').css('display', 'none');
+         }
+    });
+    
+    
     //登陆框
     var login=$('#login');
     var screen=$('#screen');
