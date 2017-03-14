@@ -71,7 +71,7 @@ $(function(){
 			$('#reg .info_user').css('display', 'none');
 			$('#reg .error_user').css('display', 'none');
 			$('#reg .succ_user').css('display', 'none');
-		} else if (!/[a-zA-Z0-9]{2,20}/.test(trim($(this).value()))) {
+		} else if (!/^[a-zA-Z0-9_]{2,20}$/.test(trim($(this).value()))) {
 			$('#reg .error_user').css('display', 'block');
 			$('#reg .info_user').css('display', 'none');
 			$('#reg .succ_user').css('display', 'none');
