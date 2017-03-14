@@ -35,7 +35,16 @@
 			<span class="error error_user">输入不合法，请重新输入！</span>
 			<span class="succ succ_user">可用</span>
 		</dd>
-		<dd>密　　码： <input type="password" name="pass" class="text" /></dd>
+		<dd>密　　码： <input type="password" name="pass" class="text" />
+            <span class="info info_pass">
+                <p>安全级别：<strong class="s s1">■</strong><strong class="s s2">■</strong><strong class="s s3">■</strong><strong class="s s4" style="font-weight:normal"></strong></p>
+                <p><strong class="q1" style="font-weight:normal">○</strong>6-20个字符</p>
+                <p><strong class="q2" style="font-weight:normal">○</strong>只能包含大小写字母、数字和非空格字符</p>
+                <p><strong class="q3" style="font-weight:normal">○</strong>大、小写字母、数字、非空字符，至少两种</p>
+            </span>
+			<span class="error error_pass">输入不合法，请重新输入！</span>
+			<span class="succ succ_pass">可用</span>
+        </dd>
 		<dd>密码确认： <input type="password" name="notpass" class="text" /></dd>
 		<dd><span style="vertical-align:-2px">提　　问：</span> <select name="ques">
 									<option value="0">- - - - 请选择 - - - -</option>
