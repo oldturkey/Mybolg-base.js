@@ -170,7 +170,7 @@ ul li {
 	padding:0 0 0 35px;
 	position:absolute;
 	letter-spacing:1px;
-	display:none;
+	display: none;
 }
 #reg dl dd span.info {
 	background:url(images/reg_info.png) no-repeat;
@@ -193,12 +193,39 @@ ul li {
 	top:3px;
 	left:295px;
 }
+#reg dl dd span.info_pass {
+	width: 260px;
+    height: 102px;
+    padding: 4px 0 0 15px;
+	background:url(images/reg_info3.png) no-repeat;
+	top:5px;
+	left:295px;
+    display: none;
+    letter-spacing: 0;
+}
+#reg dl dd span.info_pass p{
+    height: 25px;
+    line-height: 25px;
+    color: #666;   
+}
+#reg dl dd span.info_pass .s4{
+    margin-left: 5px;
+}
 #reg dl dd span.error_user {
 	top:3px;
 	left:295px;
 }
 #reg dl dd span.succ_user {
 	top:12px;
+	left:295px;
+}
+#reg dl dd span.error_pass {
+	top:43px;
+	left:295px;
+    
+}
+#reg dl dd span.succ_pass {
+	top:52px;
 	left:295px;
 }
 /*网站登陆*/
@@ -476,5 +503,3 @@ ul li {
     background: url(images/share.png)no-repeat;
     cursor: pointer;
 }
-
-
