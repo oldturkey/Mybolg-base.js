@@ -144,8 +144,17 @@ ul li {
 #reg dl dd select {
 	width:202px;
 }
-#reg dl dd.birthday select {
-	width:100px;
+#reg dl dd.birthday {
+    padding-left: 5px;
+}
+#reg dl dd.birthday input {
+	width:185px;
+	height:25px;
+	border:1px solid #ccc;
+	background:#fff;
+	font-size:14px;
+	color:#666;
+    padding-left: 15px;
 }
 #reg dl dd textarea {
 	width:360px;
@@ -265,6 +274,24 @@ ul li {
 #reg dl dd span.succ_email {
 	top:212px;
 	left:295px;
+}
+#reg dl dd ul.all_email {
+	width:180px;
+	height:130px;
+	background:#fff;
+	padding:5px 10px;
+	position:absolute;
+	top:233px;
+	left:84px;
+	border:1px solid #ccc;
+	display: none;
+}
+#reg dl dd ul.all_email li {
+	height:25px;
+	line-height:25px;
+	border-bottom:1px solid #e5edf2;
+	padding:0 5px;
+	cursor:pointer;
 }
 /*网站登陆*/
 #login {

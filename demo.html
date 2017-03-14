@@ -30,7 +30,7 @@
 	<h2><img src="images/close.png" alt="" class="close" />会员注册</h2>
 	<form name="reg">
 	<dl>
-		<dd>用 户 名： <input type="text" name="user" class="text" />
+		<dd>用 户 名： <input type="text" name="user" class="text" style="margin-left:5px" />
 			<span class="info info_user">请输入用户名，2~20位，由字母、数字和下划线组成！</span>
 			<span class="error error_user">输入不合法，请重新输入！</span>
 			<span class="succ succ_user">可用</span>
@@ -66,8 +66,17 @@
             <span class="info info_email">请输入电子邮件！</span>
 			<span class="error error_email">地址不合法，请重新输入！</span>
 			<span class="succ succ_email">可用</span>
+            <ul class="all_email">
+				<li><span></span>@qq.com</li>				
+                <li><span></span>@163.com</li>
+				<li><span></span>@sohu.com</li>
+				<li><span></span>@sina.com.cn</li>
+				<li><span></span>@gmail.com</li>
+
+			</ul>
         </dd>
-		<dd class="birthday"><span style="vertical-align:-2px">生　　日：</span> <select name="year">
+        <!--   使用了html的新特性
+<dd class="birthday"><span style="vertical-align:-2px">生　　日：</span> <select name="year">
 									<option value="0">- 请选择 -</option>
 								  </select> 年
 								  <select name="month">
@@ -75,7 +84,8 @@
 								  </select> 月
 								  <select name="day">
 									<option value="0">- 请选择 -</option>
-								  </select> 日</dd>
+								  </select> 日</dd>            -->
+        <dd class="birthday"><span style="vertical-align:-2px">生　　日：<input type="date" ></span></dd>
 		<dd style="height:105px;"><span style="vertical-align:85px">备　　注：</span> <textarea name="ps"></textarea></dd>			
 		<dd style="padding:0 0 0 320px;">还可以输入200字</dd>		
 		<dd style="padding:0 0 0 80px;"><input type="button" class="submit" /></dd>

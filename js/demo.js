@@ -205,10 +205,15 @@ $(function(){
     
     //电子邮件验证
     $('form').form('email').bind('focus', function () {
+        //补全界面
+        if($(this).value().indexOf('@')==-1)$('#reg .all_email').css('display','block');
+        
          $('#reg .info_email').css('display', 'block');
 		$('#reg .error_email').css('display', 'none');
 		$('#reg .succ_email').css('display', 'none');
         }).bind('blur', function () {
+        $('#reg .all_email').css('display','none');
+        
         if (trim($(this).value()) == '') {
              $('#reg .info_email').css('display', 'none');
          }else if(/^\w+@[0-9a-z]+(\.[a-z]{2,4}){1,2}$/.test(trim($(this).value()))){
@@ -222,7 +227,66 @@ $(function(){
          }
     });
     
+    //电子邮件键入功能
+    $('form').form('email').bind('keyup',function(event){
+        if($(this).value().indexOf('@')==-1){
+            $('#reg .all_email').css('display','block');
+            $('#reg .all_email li span').html($(this).value());
+        }else{
+            $('#reg .all_email').css('display','none');
+        }    
+        
+            $('#reg .all_email li').css('background','none');
+            $('#reg .all_email li').css('color','#666');
+        
+        if(event.keyCode==40){
+           if(this.index==undefined||this.index>=$('#reg .all_email li').length()-1){
+               this.index=0;
+           }else{
+            this.index++;
+               }
+            //$('#reg .all_email li').css('background','none');
+            //$('#reg .all_email li').css('color','#666');
+            $('#reg .all_email li').eq(this.index).css('background','#e5edf2');
+            $('#reg .all_email li').eq(this.index).css('color','#369'); 
+        }
+        
+        if(event.keyCode==38){
+           if(this.index==undefined||this.index<=0){
+               this.index=$('#reg .all_email li').length();
+           }else{
+            this.index--;
+               }
+            //$('#reg .all_email li').css('background','none');
+            //$('#reg .all_email li').css('color','#666');
+            $('#reg .all_email li').eq(this.index).css('background','#e5edf2');
+            $('#reg .all_email li').eq(this.index).css('color','#369'); 
+        }
+        
+        if(event.keyCode==13){
+            $(this).value($('#reg .all_email li').eq(this.index).text());
+            $('#reg .all_email').css('display','none');
+            this.index=undefined;
+        }
+    });
     
+    //电子邮件补全系统点击获取
+    //点击事件是鼠标点击弹起后才触发，而blur在失去焦点后就会触发隐藏，导致点击事件失效
+     /*$('#reg .all_email li').click(function(){
+         alert('');
+     });*/
+    $('#reg .all_email li').bind('mousedown',function(){
+        $('form').form('email').value($(this).text());
+    });
+     
+    //电子邮件补全系统，鼠标移入移出效果
+    $('#reg .all_email li').hover(function(){
+        $(this).css('background','#e5edf2');
+        $(this).css('color','#369');     
+    },function(){
+       $(this).css('background','none');
+        $(this).css('color','#666'); 
+    });
     //登陆框
     var login=$('#login');
     var screen=$('#screen');

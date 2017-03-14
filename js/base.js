@@ -191,7 +191,11 @@ Base.prototype.eq = function(num) {
      this.elements[0]=element;
      return this;
  };
- 
+
+//获取某组节点的数量
+Base.prototype.length=function(){
+    return this.elements.length;
+};
 
 //获取首个节点，并返回该节点
 Base.prototype.first=function(){
@@ -308,6 +312,17 @@ Base.prototype.html=function(str){
     return this;
 };
 
+
+//设置innerText
+Base.prototype.text=function(str){
+    for(var i=0;i<this.elements.length;i++){
+        if(arguments.length==0){
+            return getInnerText(this.elements[i]);
+        }
+        setInnerText(this.elements[i],str);
+    }
+    return this;
+};
 
 //设置事件发生器
 Base.prototype.bind=function(event,fn){

@@ -242,6 +242,20 @@ function preDef(event) {
 }
 */
 
+//跨浏览器获取innerText
+function getInnerText(element){
+    return (typeof element.textContent=="string")?element.textContent:element.innerText;
+}
+
+//跨浏览器设置innerText
+function setInnerText(element,text){
+    if(typeof element.textContent=='string'){
+        element.textContent=text;
+    }else{
+        element.innerText=text;
+    }
+}
+
 //删除左右空格
  function trim(str){
      return str.replace(/(^\s*)|(\s*$)/g,'');
@@ -251,4 +265,12 @@ function preDef(event) {
  function scrollTop(){
             document.documentElement.scrollTop=0;
             document.body.scrollTop=0;
+}
+
+//某一个值是否存在某一个数组中
+function inArray(array,value){
+    for(var i in array){
+        if(array[i]===value)return true;
+    }
+    return false;
 }
