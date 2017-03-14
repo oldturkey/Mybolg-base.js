@@ -203,6 +203,7 @@ ul li {
     display: none;
     letter-spacing: 0;
 }
+
 #reg dl dd span.info_pass p{
     height: 25px;
     line-height: 25px;
@@ -222,10 +223,47 @@ ul li {
 #reg dl dd span.error_pass {
 	top:43px;
 	left:295px;
-    
 }
 #reg dl dd span.succ_pass {
 	top:52px;
+	left:295px;
+}
+#reg dl dd span.info_notpass {
+	top: 83px;
+    left: 295px;
+}
+#reg dl dd span.error_notpass {
+	top:83px;
+	left:295px;
+    
+}
+#reg dl dd span.succ_notpass {
+	top:92px;
+	left:295px;
+}
+#reg dl dd span.info_ans {
+	top: 163px;
+    left: 295px;    
+}
+#reg dl dd span.error_ans {
+	top:163px;
+	left:295px;
+}
+#reg dl dd span.succ_ans {
+	top:172px;
+	left:295px;    
+}
+#reg dl dd span.info_email {
+	top: 203px;
+    left: 295px;
+}
+#reg dl dd span.error_email {
+	top:203px;
+	left:295px;
+    
+}
+#reg dl dd span.succ_email {
+	top:212px;
 	left:295px;
 }
 /*网站登陆*/
