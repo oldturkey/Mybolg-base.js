@@ -58,6 +58,11 @@ $(function(){
     });
     
     //表单验证
+    
+    //初始化操作，发现ie浏览器刷新后不会初始化导致一些问题
+    $('form').first().reset();
+    
+    //用户名验证功能
     $('form').form('user').bind('focus', function () {
 		$('#reg .info_user').css('display', 'block');
 		$('#reg .error_user').css('display', 'none');
@@ -67,7 +72,7 @@ $(function(){
 			$('#reg .info_user').css('display', 'none');
 			$('#reg .error_user').css('display', 'none');
 			$('#reg .succ_user').css('display', 'none');
-		} else if (!/^[a-zA-Z0-9_]{2,20}$/.test(trim($(this).value()))) {
+		} else if (!user_check()) {
 			$('#reg .error_user').css('display', 'block');
 			$('#reg .info_user').css('display', 'none');
 			$('#reg .succ_user').css('display', 'none');
@@ -77,6 +82,10 @@ $(function(){
 			$('#reg .info_user').css('display', 'none');
 		}
 	});
+    function user_check(){
+        if(/^[a-zA-Z0-9_]{2,20}$/.test(trim($('form').form('user').value())))return true;
+    }
+    
     //密码验证功能
      $('form').form('pass').bind('focus', function () {
          $('#reg .info_pass').css('display', 'block');
@@ -86,7 +95,7 @@ $(function(){
          if (trim($(this).value()) == '') {
              $('#reg .info_pass').css('display', 'none');
          }else{
-             if(check_pass(this)){
+             if(check_pass()){
                   $('#reg .info_pass').css('display', 'none');
 		          $('#reg .error_pass').css('display', 'none');
 		          $('#reg .succ_pass').css('display', 'block'); 
@@ -98,16 +107,14 @@ $(function(){
          }
          });
     //验证密码强度
-    $('form').form('pass').bind('keyup',function(){
-        check_pass(this);
-    });
+    $('form').form('pass').bind('keyup',check_pass);
     //密码验证函数
-    function check_pass(_this){
+    function check_pass(){
         var code_length=0;//每次触发事件都会有一个计数器，来统计不同类型数据的个数
-        var value=trim($(_this).value());
+        var value=trim($('form').form('pass').value());
         var value_length=value.length;
         //最开始打算写在外面，但是考虑到全局变量会污染全局环境，可能和其他业务逻辑变量重名，所以要封装成函数
-        var flag=false;
+        //var flag=false;
         //第一个条件，输入的值大于6位小于20位
         if(value_length>=6&&value_length<=20){
             $('#reg .info_pass .q1').html('●').css('color','green');
@@ -162,7 +169,11 @@ $(function(){
             $('#reg .info_pass .s3').css('color','#ccc');
             $('#reg .info_pass .s4').html('');
         }
-        if(code_length>=2&&value_length>=6&&value_length<=20&&(!/\s/.test(value)))return flag=true;
+        if(code_length>=2&&value_length>=6&&value_length<=20&&(!/\s/.test(value))){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     //密码再次确认
@@ -173,7 +184,7 @@ $(function(){
         }).bind('blur', function () {
         if (trim($(this).value()) == '') {
              $('#reg .info_notpass').css('display', 'none');
-         }else if(trim($(this).value())==trim($('form').form('pass').value())){
+         }else if(check_notpass()){
              $('#reg .info_notpass').css('display', 'none');
              $('#reg .error_notpass').css('display', 'none');
 		     $('#reg .succ_notpass').css('display', 'block');
@@ -184,6 +195,27 @@ $(function(){
          }
     });
     
+    function check_notpass(){
+        if(trim($('form').form('notpass').value())==trim($('form').form('pass').value()))return true;
+    }
+    
+    //验证提问
+    function check_ques(){
+        if($('form').form('ques').value()!=0)return true;
+    }
+    $('form').form('ques').bind('change',function(){
+        if(check_ques)
+        $('#reg .error_ques').css('display', 'none');
+    });
+    
+    //验证生日
+    function check_birthday(){
+        if($('form').form('birthday').value()!=0)return true;
+    }
+    $('form').form('birthday').bind('change',function(){
+        if(check_birthday)
+        $('#reg .error_birthday').css('display', 'none');
+    });
     //回答验证
     $('form').form('ans').bind('focus', function () {
          $('#reg .info_ans').css('display', 'block');
@@ -192,7 +224,7 @@ $(function(){
         }).bind('blur', function () {
         if (trim($(this).value()) == '') {
              $('#reg .info_ans').css('display', 'none');
-         }else if(trim($(this).value()).length>=2&&trim($(this).value()).length<=32){
+         }else if(check_ans()){
              $('#reg .info_ans').css('display', 'none');
              $('#reg .error_ans').css('display', 'none');
 		     $('#reg .succ_ans').css('display', 'block');
@@ -202,7 +234,9 @@ $(function(){
 		     $('#reg .succ_ans').css('display', 'none');
          }
     });
-    
+    function check_ans(){
+        if(trim($('form').form('ans').value()).length>=2&&trim($('form').form('ans').value()).length<=32)return true;
+    }
     //电子邮件验证
     $('form').form('email').bind('focus', function () {
         //补全界面
@@ -226,7 +260,9 @@ $(function(){
 		     $('#reg .succ_email').css('display', 'none');
          }
     });
-    
+    function check_email(){
+        if(/^\w+@[0-9a-z]+(\.[a-z]{2,4}){1,2}$/.test(trim($('form').form('email').value())))return true;
+    }
     //电子邮件键入功能
     $('form').form('email').bind('keyup',function(event){
         if($(this).value().indexOf('@')==-1){
@@ -287,6 +323,73 @@ $(function(){
        $(this).css('background','none');
         $(this).css('color','#666'); 
     });
+    
+    //备注
+    $('form').form('ps').bind('keyup',check_ps).bind('paste',function(){
+        //粘贴事件会在内容粘贴到文本框之前触发
+        setTimeout(check_ps,50)
+    });
+    //点击清尾功能
+    $('#reg .ps .clear').bind('click',function(){
+        $('form').form('ps').value($('form').form('ps').value().substring(0,5));
+        check_ps();
+    });
+    
+    function check_ps(){
+        var num=200-$('form').form('ps').value().length;
+        if(num>=0){
+            $('#reg .ps').eq(1).css('display','none');
+           $('#reg .ps').eq(0).css('display','block'); 
+            $('#reg .ps .num').eq(0).html(num);
+            return true;
+        }
+        if(num<0){
+            $('#reg .ps').eq(0).css('display','none');
+            $('#reg .ps .num').eq(1).html(Math.abs(num)).css('color','red');
+            $('#reg .ps').eq(1).css('display','block');
+            return false;
+        }
+    }
+    
+    //提交表单验证
+    $('form').form('sub').click(function(){
+        var flag=true;
+        if(!user_check()){
+            flag=false;
+            $('#reg .error_user').css('display', 'block');
+        }
+        if(!check_pass()){
+            flag=false;
+            $('#reg .error_pass').css('display', 'block');
+        }
+        if(!check_notpass()){
+            flag=false;
+            $('#reg .error_notpass').css('display', 'block');
+        }
+        if(!check_ques()){
+            flag=false;
+            $('#reg .error_ques').css('display', 'block');
+        }
+        if(!check_ans()){
+            flag=false;
+            $('#reg .error_ans').css('display', 'block');
+        }
+        if(!check_email()){
+            flag=false;
+            $('#reg .error_email').css('display', 'block');
+        }
+        if(!check_birthday()){
+            flag=false;
+            $('#reg .error_birthday').css('display', 'block');
+        }
+        if(!check_ps()){
+            flag=false;
+        }
+        
+        if(flag)$('form').first().submit();
+    })
+    
+    
     //登陆框
     var login=$('#login');
     var screen=$('#screen');
