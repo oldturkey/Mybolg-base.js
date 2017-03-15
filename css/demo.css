@@ -97,7 +97,7 @@ ul li {
 	height:550px;
 	border:1px solid #ccc;
 	position:absolute;
-	/*display:none;*/
+	display:none;
 	z-index:9999;
 	background:#fff;
 }
@@ -131,11 +131,12 @@ ul li {
 }
 #reg dl dd {
 	height:30px;
-	padding:5px 0;
+	padding:5px 5px;
 }
 #reg dl dd input.text, #reg dl dd select {
 	width:200px;
 	height:25px;
+    line-height: 25px;
 	border:1px solid #ccc;
 	background:#fff;
 	font-size:14px;
@@ -154,7 +155,8 @@ ul li {
 	background:#fff;
 	font-size:14px;
 	color:#666;
-    padding-left: 15px;
+    padding-left: 16px;
+    margin-left: 7px;
 }
 #reg dl dd textarea {
 	width:360px;
@@ -186,6 +188,16 @@ ul li {
 }
 #reg dl dd span.error {
 	background:url(images/reg_error.png) no-repeat;
+}
+#reg dl dd.ps {
+    padding:0 0 0 300px;
+}
+#reg dl dd.ps strong.num {
+    padding: 0 2px;
+}
+#reg dl dd.ps .clear {
+    color: #06f;
+    cursor: pointer;
 }
 #reg dl dd span.succ {
 	height:14px;
@@ -268,8 +280,7 @@ ul li {
 }
 #reg dl dd span.error_email {
 	top:203px;
-	left:295px;
-    
+	left:295px;    
 }
 #reg dl dd span.succ_email {
 	top:212px;
@@ -292,6 +303,14 @@ ul li {
 	border-bottom:1px solid #e5edf2;
 	padding:0 5px;
 	cursor:pointer;
+}
+#reg dl dd span.error_ques {
+	top:123px;
+	left:295px; 
+}
+#reg dl dd span.error_birthday {
+	top:243px;
+	left:295px; 
 }
 /*网站登陆*/
 #login {
