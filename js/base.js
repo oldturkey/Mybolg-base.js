@@ -200,7 +200,22 @@ Base.prototype.length=function(){
 //获取首个节点，并返回该节点
 Base.prototype.first=function(){
     return this.elements[0];
-}
+};
+
+
+//获取某一个节点的属性
+Base.prototype.attr=function(attr){
+    return this.elements[0][attr];
+};
+
+//获取某一个节点在整个节点组中是第几个的索引值
+Base.prototype.index=function(element){
+    var children=this.elements[0].parentNode.children;
+    for(var i=0;i<children.length;i++){
+        if(this.elements[0]==children[i])return i;
+    }
+    
+};
 
 //获取最后一个节点，并返回该节点对象
 Base.prototype.last=function(){
@@ -228,6 +243,17 @@ Base.prototype.prev=function(){
         }
     return this;
 }
+
+//设置某一个节点的透明度
+Base.prototype.opacity=function(num){
+    for(var i=0;i<this.elements.length;i++){
+     this.elements[i].style.opacity=num/100;
+        this.elements[i].style.filter='alpha(opacity='+num+')' ;
+        }
+    return this;
+};
+
+
 //设置css
 Base.prototype.css=function(attr,value){
     for(var i=0;i<this.elements.length;i++){

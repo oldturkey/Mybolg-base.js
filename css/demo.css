@@ -88,7 +88,7 @@ ul li {
 	height:550px;
 	border:1px solid #ccc;
 	position:absolute;
-	/*display:none;*/
+	display:none;
 	z-index:9999;
 	background:#fff;
 }
@@ -456,6 +456,61 @@ ul li {
 #sidebar ul li a {
     text-decoration: none;
     color:#333;
+}
+/*index*/
+#index {
+    width: 630px;
+    height: 570px;
+    background: #eee;
+    float: right
+}
+
+/*轮播图 */
+#banner {
+    width: 900px;
+    height: 150px;
+    float: left;
+    margin: 10px 0;
+    position: relative;
+    overflow: hidden;
+}
+#banner img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#banner ul {
+    position: absolute;
+    left: 420px;
+    top: 128px;
+    z-index: 4;
+}
+#banner ul li {
+    float: left;
+    padding:0 5px;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+}
+#banner span {
+    position: absolute;
+    top:125px;
+    left: 0;
+    width: 900px;
+    height: 25px;
+    background:#333;
+    opacity: .3;
+    filter: alpha(opacity=30);
+    z-index: 3;
+}
+#banner strong {
+    position: absolute;
+    top: 130px;
+    left: 10px;
+    color: #fff;
+    z-index: 4;
 }
 /*百度分享侧边栏 */
 #share {
