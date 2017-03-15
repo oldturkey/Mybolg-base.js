@@ -30,7 +30,7 @@
 	<h2><img src="images/close.png" alt="" class="close" />会员注册</h2>
 	<form name="reg">
 	<dl>
-		<dd>用 户 名： <input type="text" name="user" class="text" style="margin-left:5px" />
+		<dd class="user">用 户 名：<input type="text" name="user" class="text"  />
 			<span class="info info_user">请输入用户名，2~20位，由字母、数字和下划线组成！</span>
 			<span class="error error_user">输入不合法，请重新输入！</span>
 			<span class="succ succ_user">可用</span>
@@ -56,7 +56,9 @@
 									<option value="2">- - 您的狗狗的名字</option>
 									<option value="3">- - 您的出生地</option>
 									<option value="4">- - 您最喜欢的明星</option>
-								  </select></dd>
+								  </select>
+        <span class="error error_ques">尚未选择提问，请选择！</span>
+        </dd>
 		<dd>回　　答： <input type="text" name="ans" class="text" />
             <span class="info info_ans">请输入回答，2~23位！</span>
 			<span class="error error_ans">回答不合法，请重新输入！</span>
@@ -75,7 +77,7 @@
 
 			</ul>
         </dd>
-        <!--   使用了html的新特性
+        <!--   使用了html的新特性  不兼容IE
 <dd class="birthday"><span style="vertical-align:-2px">生　　日：</span> <select name="year">
 									<option value="0">- 请选择 -</option>
 								  </select> 年
@@ -85,10 +87,13 @@
 								  <select name="day">
 									<option value="0">- 请选择 -</option>
 								  </select> 日</dd>            -->
-        <dd class="birthday"><span style="vertical-align:-2px">生　　日：<input type="date" ></span></dd>
+        <dd class="birthday"><span style="vertical-align:-2px">生　　日：<input type="date" name="birthday"></span>
+        <span class="error error_birthday">尚未选择生日，请选择！</span>
+        </dd>
 		<dd style="height:105px;"><span style="vertical-align:85px">备　　注：</span> <textarea name="ps"></textarea></dd>			
-		<dd style="padding:0 0 0 320px;">还可以输入200字</dd>		
-		<dd style="padding:0 0 0 80px;"><input type="button" class="submit" /></dd>
+		<dd style="display:block;" class="ps">还可以输入<strong class="num">200</strong>字</dd>
+        <dd style="display:none;" class="ps">已超过<strong class="num"></strong>字,<span class="clear">清尾</span></dd>		
+		<dd style="padding:0 0 0 80px;"><input type="button" class="submit" name="sub"/></dd>
 	</dl>
 	</form>
 </div>
