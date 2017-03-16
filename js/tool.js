@@ -272,11 +272,12 @@ function setInnerText(element,text){
      return str.replace(/(^\s*)|(\s*$)/g,'');
  }
 
- //锁屏的时候让屏幕不能往下拖动的方法分离出来。操作滚动条的时候滚动条自动归0
+ /*下方其他部位需要弹窗的问题，所以去掉
+ 锁屏的时候让屏幕不能往下拖动的方法分离出来。操作滚动条的时候滚动条自动归0
  function scrollTop(){
             document.documentElement.scrollTop=0;
             document.body.scrollTop=0;
-}
+}*/
 
 //某一个值是否存在某一个数组中
 function inArray(array,value){
@@ -285,3 +286,8 @@ function inArray(array,value){
     }
     return false;
 }
+
+//组织默认行为
+function predef(e){
+   e.preventDefault();
+};
