@@ -39,30 +39,34 @@ $().extend('drag',function(){
             var v=e.clientY-diffY;
             if(h<0){
                    h=0;
-               }else if(h>document.documentElement.clientWidth - _this.offsetWidth){
-                   h=document.documentElement.clientWidth - _this.offsetWidth;
+               }else if(h<=getScroll().left){
+                   h=getScroll().left;
+               }else if(h>getInner().width+getScroll().left - _this.offsetWidth)
+                        {
+                   h=getInner().width+getScroll().left - _this.offsetWidth;
                };
              if(v<0){
                  v=0;
-             }else if(v>document.documentElement.clientHeight - _this.offsetHeight){
-                 v=document.documentElement.clientHeight - _this.offsetHeight;
+             }else if(v<=getScroll().top){
+                v=getScroll().top; 
+             }else if(v>getInner().height+getScroll().top - _this.offsetHeight){
+                 v=getInner().height+getScroll().top - _this.offsetHeight;
              }      
             _this.style.left=h+'px';
             _this.style.top=v+'px';
                //解决ie浏览器鼠标移出可视范围后停止捕获事件的bug
-        if(typeof _this.setCapture !='undefined'){
-            _this.setCapture();
-        }
-        }
-             function up(){
-                    removeEvent(document,'mousemove',move);
-                    removeEvent(document,'mouseup',up);
-                    if(typeof releaseCapture!='undefined'){
-                        _this.releaseCapture();
-                            }
-                        }
-        
-            });
+        if (typeof _this.setCapture != 'undefined') {
+					_this.setCapture();
+				} 
+			}
+             function up() {
+				removeEvent(document, 'mousemove', move);
+				removeEvent(document, 'mouseup', up);
+				if (typeof _this.releaseCapture != 'undefined') {
+					_this.releaseCapture();
+				}
+			}
+		});
         }
 	return this;
 });
