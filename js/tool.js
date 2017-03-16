@@ -176,6 +176,17 @@ function removeEvent(obj,type,fn){
 }
 
 
+//兼容的获取一个元素到浏览器顶点的方法
+function offsetTop(element){
+    var top=element.offsetTop;
+    var parent=element.offsetParent;
+    while(parent!=null){
+        top+=parent.offsetTop;
+        parent=parent.offsetParent;
+    }
+    return top;
+}
+
 //兼容不同浏览器获取视口的大小
 function getInner(){
     if(typeof window.innerWidth!='undefined'){
