@@ -426,10 +426,12 @@ $(function(){
     //百度分享初始位置
     $('#share').css('top',getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2+'px');  
     $(window).bind('scroll',function(){
-        $('#share').animate({
+        setTimeout(function(){
+           $('#share').animate({
             attr:'y',
             target:getScroll().top+(getInner().height-parseInt(getStyle($('#share').first(),'height')))/2
-        });
+        }); 
+        },100)
     });
     //百度分享收缩效果
     $('#share').hover(function(){
@@ -556,6 +558,33 @@ $(function(){
         banner($('#banner ul li').eq(banner_index).first(),banner_index==0?$('#banner ul li').length()-1:banner_index-1);
         banner_index++;
     }
+    
+   /*延迟加载图片*/
+    //1.图片距离浏览器顶点的距离  
+    //$('.wait_load').eq(0).first().offsetTop; 927
+    //低版本的ie和火狐不兼容的问题，所以封装了offsetTop方法 offsetTop($('.wait_load').eq(0).first())
+    //2.浏览器可视区域的宽度
+    //(getInner().height);  794
+    //3.滚动条滚动的距离
+    //(getScroll().top);0
+    var wait_load=$('.wait_load');//先赋值，防止后面重复调用浪费内存
+    //透明度动画效果初始化
+    wait_load.opacity(0);
+    $(window).bind('scroll',function(){
+        setTimeout(function(){
+            for(var i=0;i<wait_load.length();i++){
+                var _this=wait_load.ge(i);//先获取原生对象并保存，防止循环后被当作一个值
+                if(getInner().height+getScroll().top>=offsetTop($(_this).first())){
+                $(_this).attr('src',$(_this).attr('xsrc')).animate({
+                    attr:'o',
+                    target:100,
+                    t:30,
+                    step:10
+                });
+                }
+        }
+        },100)         
+    });
     
     
 });
