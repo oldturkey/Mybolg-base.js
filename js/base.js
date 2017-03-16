@@ -412,10 +412,14 @@ Base.prototype.hide=function(){
 //锁屏功能
 Base.prototype.lock=function(){
     for(var i=0;i<this.elements.length;i++){
-        this.elements[i].style.width=getInner().width+'px';
-        this.elements[i].style.height=getInner().height+'px';
-        this.elements[i].style.display="block";
-        document.documentElement.style.overflow="hidden";
+       this.elements[i].style.width = getInner().width + getScroll().left + 'px';
+		this.elements[i].style.height = getInner().height + getScroll().top + 'px';
+		this.elements[i].style.display = 'block';
+        //兼容低版本的火狐，滚动条会清0的问题
+        parseFloat(sys.firefox)<4?document.body.style.overflow = 'hidden' : document.documentElement.style.overflow = 'hidden';
+        addEvent(document,'mousedown',predef);
+        addEvent(document,'mouseup',predef);
+        addEvent(document,'selectstart',predef);
        /* 解决不了火狐浏览器锁屏的时候还是可以下拉的问题
         addEvent(this.elements[i],'mousedown',function(e){
             e.preventDefault();
@@ -424,7 +428,7 @@ Base.prototype.lock=function(){
             });
         });
         */
-        addEvent(window,'scroll',scrollTop);
+        //addEvent(window,'scroll',scrollTop);
         }
     return this;
 };
@@ -434,8 +438,12 @@ Base.prototype.lock=function(){
 Base.prototype.unlock=function(){
     for(var i=0;i<this.elements.length;i++){
         this.elements[i].style.display="none";
-        document.documentElement.style.overflow="auto";
-        removeEvent(window,'scroll',scrollTop);
+        //兼容低版本的火狐，滚动条会清0的问题
+         parseFloat(sys.firefox)<4?document.body.style.overflow = 'auto' : document.documentElement.style.overflow = 'auto';
+        //removeEvent(window,'scroll',scrollTop);
+        removeEvent(document,'mousedown',predef);
+        removeEvent(document,'mouseup',predef);
+        removeEvent(document,'selectstart',predef);
         }
     return this;
 };
@@ -451,55 +459,37 @@ Base.prototype.click = function (fn) {
 
 
 //设置物体居中
-Base.prototype.center=function(width,height){
-    var top=(getInner().height-width)/2;
-    var left=(getInner().width-height)/2;
-    for(var i=0;i<this.elements.length;i++){
-        this.elements[i].style.top=top+'px';
-        this.elements[i].style.left=left+'px';
-    }
-    return this;
+Base.prototype.center = function (width, height) {
+	var top = (getInner().height - height) / 2 + getScroll().top;
+	var left = (getInner().width - width) / 2 + getScroll().left;
+	for (var i = 0; i < this.elements.length; i ++) {
+		this.elements[i].style.top = top + 'px';
+		this.elements[i].style.left = left + 'px';
+	}
+	return this;
 };
 
 //获取屏幕变化信息
-Base.prototype.resize=function(fn){
-     for (var i = 0; i < this.elements.length; i ++) {
-         var element=this.elements[i];
-        /* 改为现代事件绑定
-        window.onresize=function(){
-             fn();
-             if(element.offsetLeft>getInner().width-element.offsetWidth){
-                 element.style.left=getInner().width-element.offsetWidth+'px';
-             }
-             if(element.offsetLeft<0){
-                 element.style.left=0;
-             }
-             if(element.offsetTop>getInner().height-element.offsetHeight){
-                 element.style.top=getInner().height-element.offsetHeight+'px';
-             }
-             if(element.offsetTop<0){
-                 element.style.top=0;
-             }
-         };
-         */
-         addEvent(window,'resize',function(){
-             fn();
-             if(element.offsetLeft>getInner().width-element.offsetWidth){
-                 element.style.left=getInner().width-element.offsetWidth+'px';
-             }
-             if(element.offsetLeft<0){
-                 element.style.left=0;
-             }
-             if(element.offsetTop>getInner().height-element.offsetHeight){
-                 element.style.top=getInner().height-element.offsetHeight+'px';
-             }
-             if(element.offsetTop<0){
-                 element.style.top=0;
-             }
-         });
-         }
-    return this;
-    
+Base.prototype.resize = function (fn) {
+	for (var i = 0; i < this.elements.length; i ++) {
+		var element = this.elements[i];
+		addEvent(window, 'resize', function () {
+			fn();
+			if (element.offsetLeft > getInner().width + getScroll().left - element.offsetWidth) {
+				element.style.left = getInner().width + getScroll().left - element.offsetWidth + 'px';
+				if (element.offsetLeft <= 0 + getScroll().left) {
+					element.style.left = 0 + getScroll().left + 'px';
+				}
+			}
+			if(element.offsetTop > getInner().height + getScroll().top - element.offsetHeight) {
+				element.style.top = getInner().height + getScroll().top - element.offsetHeight + 'px';
+				if (element.offsetTop <= 0 + getScroll().top) {
+					element.style.top = 0 + getScroll().top + 'px';
+				}
+			}
+		});
+	}
+	return this;
 };
 
 
