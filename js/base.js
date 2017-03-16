@@ -203,9 +203,16 @@ Base.prototype.first=function(){
 };
 
 
-//获取某一个节点的属性
-Base.prototype.attr=function(attr){
-    return this.elements[0][attr];
+//获取某一个节点的属性 或者设置一个节点的属性
+Base.prototype.attr=function(attr,value){
+    for(var i=0;i<this.elements.length;i++){
+        if(arguments.length==1){
+            return this.elements[i].getAttribute(attr);
+        }else if(arguments.length==2){
+            this.elements[i].setAttribute(attr,value);
+        }
+        }
+    return this;
 };
 
 //获取某一个节点在整个节点组中是第几个的索引值
