@@ -249,7 +249,21 @@ Base.prototype.prev=function(){
         if(this.elements[i].nodeType==3)this.prev();  
         }
     return this;
-}
+};
+
+//获取当前节点在父元素中上一个节点的索引
+Base.prototype.prevIndex=function(index,parent){
+    var length=parent.children.length;
+    if(index==0)return length-1;
+    return index-1;
+};
+
+//获取当前节点在父元素中上一个节点的索引
+Base.prototype.nextIndex=function(index,parent){
+    var length=parent.children.length;
+    if(index==length)return 0;
+    return index+1;
+};
 
 //设置某一个节点的透明度
 Base.prototype.opacity=function(num){

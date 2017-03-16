@@ -668,7 +668,7 @@ ul li {
 	height:511px;
 	border:1px solid #ccc;
 	position:absolute;
-	display: none;
+	display:none;
 	z-index:9999;
 	background:#fff;
 }
@@ -691,6 +691,18 @@ ul li {
 	top:14px;
 	right:8px;
 	cursor:pointer;
+}
+#photo_big .big {
+	width:620px;
+	height:460px;
+	padding:10px 0 0 0;
+	background:#333;
+}
+#photo_big .big img {
+	display:block;
+	margin:0 auto;
+	position:relative;
+	top:190px;
 }
 #photo_big .big strong {
 	display:block;

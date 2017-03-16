@@ -31,8 +31,7 @@ $(function(){
     //注册框
     var reg=$('#reg');
     var screen=$('#screen');
-    reg.center(600,550).resize(function(){
-        reg.center(600,550);
+    reg.resize(function(){
         if(reg.css('display')=='block'){
             screen.lock();
             };
@@ -392,8 +391,7 @@ $(function(){
     //登陆框
     var login=$('#login');
     var screen=$('#screen');
-    login.center(250,350).resize(function(){
-        login.center(250,350);
+    login.resize(function(){
         if(login.css('display')=='block'){
             screen.lock();
             };
@@ -590,7 +588,7 @@ $(function(){
     
     //图片预加载弹窗
     var photo_big = $('#photo_big');
-    photo_big.center(620, 511).resize(function () {
+    photo_big.resize(function () {
 		if (photo_big.css('display') == 'block') {
 			screen.lock();
 		}
@@ -603,7 +601,27 @@ $(function(){
             t:30,
             step:10
         });
-    })
+        var temp_img=new Image();
+     $(temp_img).bind('load',function(){
+        $('#photo_big .big img').attr('src',temp_img.src).animate({
+        attr:'o',
+        target:100,
+        t:30,
+        step:10
+    }).css('width','600px').css('height','450px').css('top','0').opacity(0);
+    }); 
+     temp_img.src=$(this).attr('bigsrc'); 
+        
+        var children=this.parentNode.parentNode;
+        var prev=prevIndex($(children).index(),children.parentNode);
+        var next=nextIndex($(children).index(),children.parentNode);
+        
+       var prev_img=new Image();
+        var next_img=new Image();
+        
+        prev_img.src=$('#photo dl dt img').eq(prev).attr('bigsrc');
+        next_img.src=$('#photo dl dt img').eq(next).attr('bigsrc');
+    });
     $('#photo_big .close').click(function(){
         photo_big.css('display','none');
         screen.unlock().animate({
@@ -612,10 +630,41 @@ $(function(){
             t:30,
             step:10
         });
+       $('#photo_big .big img').attr('src','images/loading.gif').css('width','32px').css('height','32px'); 
     });
     
     //拖拽 
     photo_big.drag($('#photo_big h2').first());
+    
+    
+    
+    //图片预加载
+    /*$('#photo_big .big img').attr('src','http://image52.360doc.com/DownloadImg/2012/06/0316/24581213_1.jpg').animate({
+        attr:'o',
+        target:100,
+        t:30,
+        step:10
+    }).css('width','600px').css('height','450px').css('top','0').opacity(0);
+    
+    //问题1：网速太快，图片瞬间加载完成。
+    //问题2：动画的渐变效果没有出现
+    
+    
+    //创建一个临时的图片对象，用于保存图片
+    //alert($('#photo_big .big img').first())
+    //alert(new Image());
+    
+    var temp_img=new Image();//创建一个临时区域的图片对象
+    temp_img.src='http://img31.mtime.cn/pi/2013/09/04/100217.51367077_1000X1000.jpg';
+    
+    $(temp_img).bind('load',function(){
+        $('#photo_big .big img').attr('src',temp_img.src).animate({
+        attr:'o',
+        target:100,
+        t:30,
+        step:10
+    }).css('width','600px').css('height','450px').css('top','0').opacity(0);
+    });*/
     
 });
 
