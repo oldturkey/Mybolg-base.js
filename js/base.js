@@ -204,24 +204,23 @@ Base.prototype.first=function(){
 
 
 //获取某一个节点的属性 或者设置一个节点的属性
-Base.prototype.attr=function(attr,value){
-    for(var i=0;i<this.elements.length;i++){
-        if(arguments.length==1){
-            return this.elements[i].getAttribute(attr);
-        }else if(arguments.length==2){
-            this.elements[i].setAttribute(attr,value);
-        }
-        }
-    return this;
+Base.prototype.attr = function (attr, value) {
+	for (var i = 0; i < this.elements.length; i ++) {
+		if (arguments.length == 1) {
+			return this.elements[i].getAttribute(attr);
+		} else if (arguments.length == 2) {
+			this.elements[i].setAttribute(attr, value);
+		}
+	}
+	return this;
 };
 
 //获取某一个节点在整个节点组中是第几个的索引值
-Base.prototype.index=function(element){
-    var children=this.elements[0].parentNode.children;
-    for(var i=0;i<children.length;i++){
-        if(this.elements[0]==children[i])return i;
-    }
-    
+Base.prototype.index = function () {
+	var children = this.elements[0].parentNode.children;
+	for (var i = 0; i < children.length; i ++) {
+		if (this.elements[0] == children[i]) return i;
+	}
 };
 
 //获取最后一个节点，并返回该节点对象
@@ -251,19 +250,7 @@ Base.prototype.prev=function(){
     return this;
 };
 
-//获取当前节点在父元素中上一个节点的索引
-Base.prototype.prevIndex=function(index,parent){
-    var length=parent.children.length;
-    if(index==0)return length-1;
-    return index-1;
-};
 
-//获取当前节点在父元素中上一个节点的索引
-Base.prototype.nextIndex=function(index,parent){
-    var length=parent.children.length;
-    if(index==length)return 0;
-    return index+1;
-};
 
 //设置某一个节点的透明度
 Base.prototype.opacity=function(num){
