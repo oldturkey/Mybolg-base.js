@@ -286,19 +286,19 @@ function inArray(array,value){
     }
     return false;
 }
-//获取当前节点在父元素中上一个节点的索引
-function prevIndex(index,parent){
-    var length=parent.children.length;
-    if(index==0)return length-1;
-    return index-1;
-};
+//获取某一个节点的上一个节点的索引
+function prevIndex(current, parent) {
+	var length = parent.children.length;
+	if (current == 0) return length - 1;
+	return parseInt(current) - 1;
+}
 
-//获取当前节点在父元素中上一个节点的索引
-function nextIndex(index,parent){
-    var length=parent.children.length;
-    if(index==length)return 0;
-    return index+1;
-};
+//获取某一个节点的下一个节点的索引
+function nextIndex(current, parent) {
+	var length = parent.children.length;
+	if (current == length - 1) return 0;
+	return parseInt(current) + 1;
+}
 //组织默认行为
 function predef(e){
    e.preventDefault();
