@@ -303,3 +303,6 @@ function nextIndex(current, parent) {
 function predef(e){
    e.preventDefault();
 };
+function fixedScroll() {
+	window.scrollTo(fixedScroll.left, fixedScroll.top);
+}
