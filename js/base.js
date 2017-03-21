@@ -413,8 +413,8 @@ Base.prototype.hide=function(){
 //锁屏功能
 Base.prototype.lock=function(){
     for(var i=0;i<this.elements.length;i++){
-        fixedScroll.left=getScroll().left;
-        fixedScroll.top=getScroll().top;
+       fixedScroll.top = getScroll().top;
+		fixedScroll.left = getScroll().left;
        this.elements[i].style.width = getInner().width + getScroll().left + 'px';
 		this.elements[i].style.height = getInner().height + getScroll().top + 'px';
 		this.elements[i].style.display = 'block';
@@ -423,34 +423,23 @@ Base.prototype.lock=function(){
         addEvent(this.elements[i],'mousedown',predef);
         addEvent(this.elements[i],'mouseup',predef);
         addEvent(this.elements[i],'selectstart',predef);
-        addEvent(window,'scroll',fixedScroll);
-       /* 解决不了火狐浏览器锁屏的时候还是可以下拉的问题
-        addEvent(this.elements[i],'mousedown',function(e){
-            e.preventDefault();
-            addEvent(document,'mousemove',function(e){
-               e.preventDefault(); 
-            });
-        });
-        */
-        //addEvent(window,'scroll',scrollTop);
-        }
+       addEvent(window, 'scroll', fixedScroll);
+    }
     return this;
 };
 
 
 //解锁功能
-Base.prototype.unlock=function(){
-    for(var i=0;i<this.elements.length;i++){
-        this.elements[i].style.display="none";
-        //兼容低版本的火狐，滚动条会清0的问题
-         parseFloat(sys.firefox)<4?document.body.style.overflow = 'auto' : document.documentElement.style.overflow = 'auto';
-        //removeEvent(window,'scroll',scrollTop);
-        removeEvent(this.elements[i],'mousedown',predef);
-        removeEvent(this.elements[i],'mouseup',predef);
-        removeEvent(this.elements[i],'selectstart',predef);
-        removeEvent(window,'scroll',fixedScroll);
-        }
-    return this;
+Base.prototype.unlock = function () {
+	for (var i = 0; i < this.elements.length; i ++) {
+		this.elements[i].style.display = 'none';
+		parseFloat(sys.firefox) < 4 ? document.body.style.overflow = 'auto' : document.documentElement.style.overflow = 'auto';
+		removeEvent(this.elements[i], 'mousedown', predef);
+		removeEvent(this.elements[i], 'mouseup', predef);
+		removeEvent(this.elements[i], 'selectstart', predef);
+		removeEvent(window, 'scroll', fixedScroll);
+	}
+	return this;
 };
 
 
@@ -669,6 +658,6 @@ Base.prototype.animate = function (obj) {
 
 
 //插件引入入口
- Base.prototype.extend=function(name,fn){
-     Base.prototype[name]=fn;
- };
+Base.prototype.extend = function (name, fn) {
+	Base.prototype[name] = fn;
+};

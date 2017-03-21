@@ -81,8 +81,31 @@ $(function(){
 		}
 	});
     function user_check(){
-        if(/^[a-zA-Z0-9_]{2,20}$/.test(trim($('form').form('user').value())))return true;
-    }
+        var flag = true;
+		if (!/[\w]{2,20}/.test(trim($('form').eq(0).form('user').value()))) {
+			$('#reg .error_user').html('输入不合法，请重新输入！');
+			return false;
+		} else {
+            $('#reg .info_user').css('display', 'none');
+			$('#reg .loading').css('display', 'block');
+			ajax({
+				method : 'post',
+				url : 'is_user.php',
+				data : $('form').eq(0).serialize(),
+				success : function (text) {
+					if (text == 1) {
+						$('#reg .error_user').html('用户名被占用！');
+						flag = false;
+					} else {
+						flag = true;
+					}
+					$('#reg .loading').css('display', 'none');
+				},
+				async : false
+			});
+		}
+		return flag;
+	}
     
     //密码验证功能
      $('form').form('pass').bind('focus', function () {
@@ -384,20 +407,42 @@ $(function(){
             flag=false;
         }
         
-        if(flag){
-            ajax({
-			method : 'post',
-			url : 'js/demo.php',
-			data : $('form').eq(0).serialize(),
-			success : function (text) {
-				alert(text);
-			},
-			async : true
-		});
-        }
-      
-        
+        if (flag) {
+            var _this=this;
+            $('#loading').css('display','block').center(200,40);
+            $('#loading p').html('正在提交注册中...');
+            _this.disabled=true;
+            $(_this).css('backgroundPosition','right');
+			ajax({
+				method : 'post',
+				url : 'demo.php',
+				data : $('form').eq(0).serialize(),
+				success : function (text) { 
+					if(text==1){
+                         $('#loading').css('display','none');
+                         $('#success').css('display','block').center(200,40);
+                        $('#success p').html('注册成功，请登录！');
+                        setTimeout(function(){
+                            $('#success').css('display','none') ;
+                            $('#reg').css('display','none');
+                            $('#reg .succ').css('display','none');
+                            $('form').first().reset();
+                            _this.disabled=false;
+                            $(_this).css('backgroundPosition','left');
+                            screen.unlock().animate({
+                            attr:'o',
+                            target:0,
+                            t:30,
+                            step:10
+                        });
+                        },1500);
+                    }
+				},
+				async : true
+			});
+		}
     });
+    
     
     //登陆框
     var login=$('#login');
@@ -765,65 +810,5 @@ $(function(){
         $('#photo_big .big .index').html(parseInt($(children).index())+1+'/'+$('#photo dl dt img').length());
     }
     
-    
-    /*//调用ajax
-    $(document).click(function () {
-		ajax({
-			method : 'post',
-			url : 'js/demo.php',
-			data : {
-				'name' : 'Lee',
-				'age' : 100
-			},
-			success : function (text) {
-				alert(text);
-			},
-			async : true
-		});
-	});*/
 });
 
-
-
-
-
-/*
-window.onload = function () {
-	//个人中心的下拉菜单
-	$().getClass('member').hover(function () {
-		//$().getClass('member').css('background', 'url(images/arrow2.png) no-repeat 55px center');
-		//this.css('color', 'red');
-		$(this).css('background', 'url(images/arrow2.png) no-repeat 55px center');
-		$().getClass('member_ul').show();
-	}, function () {
-		//$().getClass('member').css('background', 'url(images/arrow.png) no-repeat 55px center');
-		$(this).css('background', 'url(images/arrow.png) no-repeat 55px center');
-		$().getClass('member_ul').hide();
-	});
-     
-    var login=$().getId('login');
-    var screen=$().getId('screen');
-    login.center(250,350);
-    $().resize(function(){
-        login.center(250,350);
-        if(login.css('display')=='block'){
-            screen.lock();
-            };
-    });
-    $().getClass('login').click(function(){
-        login.center(250,350);
-        login.css('display','block');
-        screen.lock();
-    })
-    $().getClass('close').click(function(){
-        login.css('display','none');
-        screen.unlock();
-    });
-    
-    
-    
-    
-    
-    login.drag([$().getTagName('h2').getElement(0),$().getTagName('span').getElement(0)]);
-    
-};*/

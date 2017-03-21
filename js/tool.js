@@ -303,8 +303,6 @@ function nextIndex(current, parent) {
 function predef(e){
    e.preventDefault();
 };
-
-//恢复浏览器滚动条位置
-function fixedScroll(){
-    window.scrollTo(fixedScroll.left,fixedScroll.top);
+function fixedScroll() {
+	window.scrollTo(fixedScroll.left, fixedScroll.top);
 }

@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 	<title>前端项目</title>
-     <script type="text/javascript" src="js/tool.js"></script>
-    	<script type="text/javascript" src="js/base.js"></script>
+    <script type="text/javascript" src="js/tool.js"></script>
+    <script type="text/javascript" src="js/base.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/base_drag.js"></script>
     <script type="text/javascript" src="js/base_form.js"></script>
@@ -14,22 +14,20 @@
 </head>
 <body>
 
-
-   <div id="header_bg">
-	<div id="header">
-		<div class="logo"><img src="images/logo.gif" alt="" /></div>
-		<div class="member">个人中心
-			<ul class="member_ul">
-				<li><a href="###">发文</a></li>
-				<li><a href="###">换肤</a></li>
-				<li><a href="###">帮助</a></li>
-				<li><a href="###">退出</a></li>
-			</ul>
-		</div>
-		<div class="reg">注册</div>
-		<div class="login">登录</div>
-		<div class="info"></div>
-	</div>
+<div id="main_header">
+    <div id="header">
+        <div class="logo"><img src="images/logo.gif" alt="" /></div>
+        <div class="member">个人中心
+            <ul class="member_ul">
+                <li><a href="###">设置</a></li>
+                <li><a href="###">换肤</a></li>
+                <li><a href="###">帮助</a></li>
+                <li><a href="###">退出</a></li>
+            </ul>
+        </div>
+        <div class="reg">注册</div>
+        <div class="login">登陆</div>   
+    </div>
 </div>
     <div id="reg">
 	<h2><img src="images/close.png" alt="" class="close" />会员注册</h2>
@@ -39,6 +37,7 @@
 			<span class="info info_user">请输入用户名，2~20位，由字母、数字和下划线组成！</span>
 			<span class="error error_user">输入不合法，请重新输入！</span>
 			<span class="succ succ_user">可用</span>
+            <span class='loading'>正在检测用户名</span>
 		</dd>
 		<dd>密　　码： <input type="password" name="pass" class="text" />
             <span class="info info_pass">
@@ -144,7 +143,7 @@
     
     <div id="main">
         <div id="sidebar">
-            <h2>教育博文</h2>
+            <h2>教育博文1</h2>
                 <ul>
                     <li><a href="###">靠自己95后女学生被16所国外名校录取</a></li>
                     <li><a href="###">00后的成长烦恼：压力巨大成隐形杀手</a></li>
@@ -152,25 +151,64 @@
                     <li><a href="###">申请赴美读研人数下降5%7年来首遇冷</a></li>
                     <li><a href="###">西政“萌招聘”秀出辣椒与美女被赞</a></li>
                 </ul>
-            <h2>内地新闻</h2>
+            <h2>教育博文2</h2>
                 <ul>
-                    <li><a href="###">福建龙海一船只失事造成2死2失踪</a></li>
-                    <li><a href="###">人社部:治理挂证乱象 推动“放管服”</a></li>
-                    <li><a href="###">中国科学家发明试纸可30秒验血型</a></li>
-                    <li><a href="###">澳学者：澳中是最坚强的经济“盟友”</a></li>
+                    <li><a href="###">靠自己95后女学生被16所国外名校录取</a></li>
+                    <li><a href="###">00后的成长烦恼：压力巨大成隐形杀手</a></li>
+                    <li><a href="###">一年组学MIT的33门课。疯狂学习方法</a></li>
+                    <li><a href="###">申请赴美读研人数下降5%7年来首遇冷</a></li>
                     <li><a href="###">西政“萌招聘”秀出辣椒与美女被赞</a></li>
                 </ul>
-            <h2>购物博文</h2>
+            <h2>教育博文3</h2>
                 <ul>
-                    <li><a href="###">挂钩 衣柜橱柜不锈钢挂架无痕免钉钩子</a></li>
-                    <li><a href="###"> WHITE ALBUM2 OST白色相簿</a></li>
-                    <li><a href="###">垃圾桶 脚踏式不锈钢垃圾桶家用垃圾筒</a></li>
-                    <li><a href="###">尼尔机械纪元ost 机械纪元 尼尔ost</a></li>
-                    <li><a href="###">欧式垃圾桶皮革时尚酒店家用客厅垃圾筒</a></li>
+                    <li><a href="###">靠自己95后女学生被16所国外名校录取</a></li>
+                    <li><a href="###">00后的成长烦恼：压力巨大成隐形杀手</a></li>
+                    <li><a href="###">一年组学MIT的33门课。疯狂学习方法</a></li>
+                    <li><a href="###">申请赴美读研人数下降5%7年来首遇冷</a></li>
+                    <li><a href="###">西政“萌招聘”秀出辣椒与美女被赞</a></li>
                 </ul>
         </div>
         <div id='index'>
-            index
+            <div>
+                <h2>博文发表模块说明</h2>
+		    <p><b>因为Github只能展示静态网页效果，无法连接数据库内容，所以博文发表，换肤功能，AJAX的注册和登陆功能就不能在这里展示出来了，如有兴趣可以面试的时候展示</b></p>
+            </div>
+            <div>
+                <h2>bootstrap小知识点总结：a标签锚点跳转问题，布局常用方法</h2>
+                <p>1.使用锚点的时候，因为顶部导航是fixed的，所以会导致跳转偏移，所以才用给每个模块的div设置一个relative属性，并且增加padding：-50px的属性，修正锚点的位置；（增加子元素，并给予padding撑开盒子的方法还在研究）；
+<br>
+2.设置不换行，超出部分隐藏的三个标签：   overflow:hidden;white-space:norwarp;text-flow:ellpsis;   
+<br>
+3.设置某些元素，在特定屏幕大小下隐藏只要使用class="hidden-xs" 类似的用法就行了，原理就是媒体查询的方法；
+<br>
+4.注意class="container"  和 class=“container-fluid"配合使用，合理模块排版；</p>
+            </div>
+            <div>
+                <h2>Webpack 入门教程</h2>
+                <p>webpack是什么本文不再多做赘述，本文主要帮助新手详细的说明使用过程，个人小白的学习过程中遇到的坑尽量填好
+
+后来发现中文文档才是最好的学习地址，很多问题都是出在了webpack的更新上。 请参考：http://webpackdoc.com/troubleshooting.html
+
+安装 Webpack
+
+在安装 Webpack 前，你本地环境需要支持 node.js。
+
+由于 npm 安装速度慢，本教程使用了淘宝的镜像及其命令 cnpm，安装使用介绍参照：使用淘宝 NPM 镜像。
+
+使用 cnpm 安装 webpack：
+
+cnpm install webpack -g
+                创建项目
+
+接下来我们在命令行里输入指令创建一个目录 app：
+
+mkdir app
+ 
+在 app 目录下添加 runoob1.js 文件，代码如下：
+
+document.write("It works.");
+在 app 目录下添加 index.html 文件，代码如下：</p>
+            </div>
         </div>
         <div id="banner">
             <img src="images/banner1.jpg" alt="第一张轮播图片">
@@ -259,8 +297,6 @@
 		<em class="index"></em>
 	</div>
     </div> 
-    
-    <div id="screen"></div>
         
     <div id="share">
         <h2>分享到</h2>
@@ -284,6 +320,15 @@
         </ul>
         <div class="share_footer"><a href="###">百度分享</a><span></span></div>  
     </div>
+    
+    <div id="loading">
+        <p>加载中</p>
+    </div>
+    <div id="success">
+        <p>成功</p>
+    </div>
+    
+    <div id="screen"></div>
     <div id='text' style="clear:both"></div>
  <p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
     <p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>   <p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>

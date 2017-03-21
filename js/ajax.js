@@ -1,4 +1,4 @@
-﻿//封装ajax
+//封装ajax
 function ajax(obj) {
 	var xhr = (function () {
 		if (typeof XMLHttpRequest != 'undefined') {

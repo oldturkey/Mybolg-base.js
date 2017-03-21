@@ -1,4 +1,4 @@
-$().extend('serialize', function () {
+﻿$().extend('serialize', function () {
 	for (var i = 0; i < this.elements.length; i ++) {
 		var form = this.elements[i];
 		var parts = {};
