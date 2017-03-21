@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 	require 'config.php';
     
@@ -12,3 +13,9 @@
 
     mysql_close();
 ?>
+=======
+﻿<?php
+	//echo 'www.ycku.com';
+	print_r($_POST);
+?>
+>>>>>>> origin/master

@@ -408,15 +408,19 @@ $(function(){
         }
         
         if (flag) {
+<<<<<<< HEAD
             var _this=this;
             $('#loading').css('display','block').center(200,40);
             $('#loading p').html('正在提交注册中...');
             _this.disabled=true;
             $(_this).css('backgroundPosition','right');
+=======
+>>>>>>> origin/master
 			ajax({
 				method : 'post',
 				url : 'demo.php',
 				data : $('form').eq(0).serialize(),
+<<<<<<< HEAD
 				success : function (text) { 
 					if(text==1){
                          $('#loading').css('display','none');
@@ -437,6 +441,10 @@ $(function(){
                         });
                         },1500);
                     }
+=======
+				success : function (text) {
+					alert(text);
+>>>>>>> origin/master
 				},
 				async : true
 			});
