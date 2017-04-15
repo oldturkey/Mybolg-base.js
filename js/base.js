@@ -660,4 +660,4 @@ Base.prototype.animate = function (obj) {
 //插件引入入口
 Base.prototype.extend = function (name, fn) {
 	Base.prototype[name] = fn;
-};
+}; 
